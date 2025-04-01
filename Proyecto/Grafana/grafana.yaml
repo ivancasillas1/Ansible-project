@@ -1,6 +1,6 @@
 ---
 - name: kibana installation
-  hosts: cliente5
+  hosts: visualizador
   become: yes
   become_method: sudo
   roles:
