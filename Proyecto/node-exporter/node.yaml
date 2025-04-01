@@ -1,6 +1,6 @@
 ---
 - name: Node-exporter installation
-  hosts: clientes
+  hosts: exporter
   become: yes
   become_method: sudo
   roles:
