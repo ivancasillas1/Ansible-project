@@ -1,0 +1,7 @@
+---
+# just in case we need to stop grafana service
+- name: ensure grafana service stopped
+  service:
+    name: grafana-server
+    state: stopped
+...

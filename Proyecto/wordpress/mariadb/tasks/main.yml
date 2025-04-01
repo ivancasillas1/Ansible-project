@@ -1,0 +1,3 @@
+---
+# tasks file for mariadb
+- include_tasks: "mariadb-{{ ansible_os_family }}.yaml"

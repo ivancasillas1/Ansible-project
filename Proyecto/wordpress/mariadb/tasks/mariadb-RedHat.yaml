@@ -1,0 +1,116 @@
+---
+# task file for php in Debian
+#-----------------------Instalación MariaDb RedHat-----------------------
+# Update packages cache
+- name: Update packages cache
+  yum:
+    name: '*'
+    state: latest
+    update_cache: true
+
+# Install MariaDB
+- name: MariaDB installation
+  yum:
+    name:
+      - mariadb-server
+      - python3
+      - python3-PyMySQL
+
+# Start MariaDB service
+- name: Start MariaDB service
+  service:
+    name: mariadb
+    enabled: true
+    state: started
+
+# Change root user password
+- name: Run mysql_secure_installation
+  shell:
+    echo -e "{{ secure }}" | sudo mysql_secure_installation
+  args:
+    executable: /bin/bash
+
+# Restart MariaDB
+- name: Restart MariaDB
+  service:
+    name: mariadb
+    state: restarted
+
+# Create wordpress database
+- name: Create wordpress database
+  mysql_db:
+    name: wordpress
+    login_user: root
+    login_password: Viewnext
+    state: present
+
+# Create user for database
+- name: Create user for wordpress database
+  mysql_user:
+    login_user: root
+    login_password: Viewnext
+    name: vagrant
+    password: Viewnext
+    priv: 'wordpress.*:ALL,GRANT'
+    host: '%'
+    state: present
+
+# Import MariaDB config
+- name: Set up configuration
+  copy:
+    src: mariadb-server.cnf.j2
+    dest: "{{ RedHat }}"
+    owner: root
+    group: root
+    mode: '0755'
+
+# Restart MariaDB
+- name: Restart MariaDB service
+  service:
+    name: mariadb
+    state: restarted
+
+# Create wordpress database
+- name: Create wordpress database
+  mysql_db:
+    name: wordpress
+    login_user: root
+    login_password: Viewnext
+    state: present
+
+# Create user for database
+- name: Create wordpress database user
+  mysql_user:
+    login_user: root
+    login_password: Viewnext
+    name: vagrant
+    password: Viewnext
+    priv: 'worpress.*:ALL,GRANT'
+    host: '%'
+    state: present
+
+# Enable firewall
+- name: Enable MariaDB service in firewall
+  firewalld:
+    service: mysql
+    permanent: true
+    state: enabled
+
+# Open 3306 port for remote connections
+- name: Open port 3306 in firewall
+  firewalld:
+    port: 3306/tcp
+    permanent: true
+    state: enabled
+
+#Open SSH port (22)
+- name: Open port 22 in firewall
+    port: 22/tcp
+    permanent: true
+    state: enabled
+
+# Reload Firewall service
+- name: Reload firewall service
+  systemd:
+    name: firewalld
+    state: reloaded

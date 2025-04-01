@@ -1,0 +1,8 @@
+---
+# vars file for roles
+proxy: /etc/apache2/sites-available/000-default.conf
+wp: /var/www/html/wordpress/wp-config.php
+html: /var/www/html
+tmp: /tmp/wordpress.tar.gz
+wordpress: https://wordpress.org/latest.tar.gz
+selinux: /etc/selinux/config

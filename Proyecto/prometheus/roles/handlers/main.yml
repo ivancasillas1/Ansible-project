@@ -1,0 +1,15 @@
+---
+# handlers file for roles
+- name: Enable and start Prometheus
+  ansible.builtin.systemd:
+    name: prometheus
+    state: started
+    enabled: yes
+    daemon_reload: yes  # <- Esto recarga systemd en caso de cambios en el servicio
+
+- name: Enable and start Node Exporter
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: started
+    enabled: yes
+    daemon_reload: yes

@@ -1,0 +1,20 @@
+---
+# task file for grafana installation in Debian
+#-----------------------Instalación Grafana Debian-----------------------
+# Add official grafana repo
+- name: Add grafana repository
+  yum_repository:
+    name: grafana
+    description: grafana repo
+    baseurl: "{{ grafana_install_repo }}"
+    gpgkey: "{{ grafana_install_gpg_key }}"
+    gpgcheck: true
+    repo_gpgcheck: true
+    enabled: true
+
+# Install grafana open source
+- name: Install grafana oss
+  dnf:
+    name: grafana
+    state: present
+...

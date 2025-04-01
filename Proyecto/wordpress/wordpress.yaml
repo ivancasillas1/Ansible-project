@@ -1,0 +1,15 @@
+---
+- name: MariaDB Installation
+  hosts: mariadb
+  become: yes
+  become_method: sudo
+  roles:
+    - mariadb
+
+- name: Wordpress Installation
+  hosts: wordpress
+  become: yes
+  become_method: sudo
+  roles:
+    - roles
+...

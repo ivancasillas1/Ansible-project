@@ -1,0 +1,6 @@
+---
+- name: ensure grafana server started
+  service:
+    name: grafana-server
+    state: started
+...

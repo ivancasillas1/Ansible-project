@@ -1,0 +1,58 @@
+---
+# tasks file for apache2 installation on Debian
+#-----------------------Instalación Apache2 Debian-----------------------
+# Update package cache
+- name: Update package cache
+  apt:
+    name: '*'
+    state: latest
+    update_cache: true
+
+# Install Apache2
+- name: Apache installation
+  apt:
+    name: apache2
+    state: latest
+
+# Start Apache2 service
+- name: Start Apache2 service
+  service:
+    name: apache2
+    state: started
+
+# Open firewall ports
+- name: Install ufw
+  apt:
+    name: ufw
+    state: present
+
+# Enable ufw service
+- name: Enable ufw service
+  ufw:
+    state: enabled
+
+# Open port 80
+- name: Allow all access to tcp port 80
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+
+# open port 22
+- name: Allow all access to tcp port 22
+  ufw:
+    rule: allow
+    port: 22
+    proto: tcp
+
+# Reload firewall
+- name: reload ufw
+  ufw:
+    state: reloaded
+
+# Restart Apache2
+- name: Restart Apache2 service
+  service:
+    name: apache2
+    state: restarted
+...

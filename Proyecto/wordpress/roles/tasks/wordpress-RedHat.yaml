@@ -1,0 +1,92 @@
+---
+# task file for php-RedHat with Nginx
+#-----------------------Instalación Wordpress RedHat-----------------------
+# Update package cache
+- name: Update package cache
+ yum:
+    name: '*'
+    state: latest
+    update_cache: true
+
+# install required packages
+ - name: Install required packages
+   yum:
+    name:
+      - php
+      - nginx
+      - php-cli
+      - php-fpm
+      - php-mysqlnd
+      - php-zip
+      - php-devel
+      - pgp-gd
+      - php-mcrypt
+      - php-mbstring
+      - php-curl
+      - php-xml
+      - php-pear
+      - php-bcmath
+    state: latest
+
+# Restart php-fpm module
+- name: Restart php-fpm module
+  service:
+    name: php-fpm
+    state: restated
+  when: ansible_facts['services']['php-fpm'] is defined
+
+# Open firewall por for HTTP (Nginx)
+- name: Open HTTP port in fireall
+  firewalld:
+    service: http
+    permanent: true
+    state: enabled
+
+# Copy Wordpress files for installation
+- name: Copy Wordpress files
+  unarchive:
+  src: "{{ wordpress }}"
+  dest: "{{ html }"
+  remote_src: yes
+  owner: nginx
+  group: nginx
+  mode: '0755'
+
+#Set up Wordpress config
+- name: Set up Wordpress config
+  copy:
+    src: wp-config.php
+    dest: "{{ wp-config }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+# import Wordpress config to nginx
+- name: Import worpress config to nginx
+  copy:
+    src: wordpress.conf.j2
+    dest: "{{ proxy }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+# Restart Nginx Web Server
+- name: Restart nginx service
+  service:
+    name: nginx
+    state: restarted
+
+# Disable SELinux module
+- name: Disable SELinux module
+  copy:
+    src: config
+    dest: "{{ selinux }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+# Restart server
+- name: Restart remote server
+  reboot:
+    reboot_timeout: 60
+    post_reboot_delay: 30

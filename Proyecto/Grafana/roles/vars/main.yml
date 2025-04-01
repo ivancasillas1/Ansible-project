@@ -1,0 +1,15 @@
+---
+# vars file for elastic
+grafana_install_repo: "deb https://packages.grafana.com/oss/deb stable main"
+grafana_install_gpg_key: "https://packages.grafana.com/gpg.key"
+
+grafana_config_directory: /etc/grafana
+grafana_config_template: grafana.ini
+grafana_config_host: 192.168.10.45
+grafana_http_port: "3000"
+grafana_admin_user: admin
+grafana_admin_password: Ivancasillas36
+grafana_admin_email: ivanterneroternero@gmail.com
+
+
+...

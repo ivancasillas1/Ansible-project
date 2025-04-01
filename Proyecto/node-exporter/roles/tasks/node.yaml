@@ -1,0 +1,65 @@
+---
+- name: Install Node Exporter
+  become: true
+  block:
+
+    - name: Create Node Exporter group
+      ansible.builtin.group:
+        name: "{{ node_exporter_group }}"
+        state: present
+
+    - name: Create Node Exporter user
+      ansible.builtin.user:
+        name: "{{ node_exporter_user }}"
+        group: "{{ node_exporter_group }}"
+        shell: "/bin/false"
+        create_home: false
+        system: true
+
+    - name: Create required directories for Node Exporter
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ node_exporter_user }}"
+        group: "{{ node_exporter_group }}"
+        mode: "0755"
+      loop:
+        - "{{ node_exporter_dir }}"
+        - "{{ prometheus_bin_dir }}"
+
+    - name: Download Node Exporter tarball
+      ansible.builtin.get_url:
+        url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+        dest: "/tmp/node_exporter-{{ node_exporter_version }}.tar.gz"
+
+    - name: Extract Node Exporter tarball
+      ansible.builtin.unarchive:
+        src: "/tmp/node_exporter-{{ node_exporter_version }}.tar.gz"
+        dest: "{{ node_exporter_dir }}"
+        remote_src: yes
+        extra_opts:
+          - --strip-components=1
+        owner: "{{ node_exporter_user }}"
+        group: "{{ node_exporter_group }}"
+        mode: "0755"
+
+    - name: Move Node Exporter binary to bin directory
+      ansible.builtin.command:
+        cmd: mv {{ node_exporter_dir }}/node_exporter {{ prometheus_bin_dir }}/node_exporter
+        creates: "{{ prometheus_bin_dir }}/node_exporter"
+
+    - name: Set Node Exporter service (systemd)
+      ansible.builtin.template:
+        src: node_exporter.service.j2
+        dest: "/etc/systemd/system/node_exporter.service"
+        mode: "0644"
+      notify:
+        - Enable and start Node Exporter
+
+# Handlers
+- name: Enable and start Node Exporter
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: started
+    enabled: yes
+...

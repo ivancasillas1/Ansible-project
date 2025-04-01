@@ -1,0 +1,92 @@
+---
+# task file for php in Debian
+#-----------------------Instalación MariaDb Debian-----------------------
+# Update packages cache
+- name: Update packages cache
+  apt:
+    name: '*'
+    state: latest
+    update_cache: true
+
+# Install MariaDB
+- name: MariaDB installation
+  apt:
+    name:
+      - mariadb-server
+      - python3
+      - python3-mysqldb
+      - ufw
+    state: latest
+
+# Start MariaDb service
+- name: Start MariaDB service
+  service:
+    name: mariadb
+    enabled: true
+    state: started
+
+# Secure_installation and change root password
+- name: Mysql-secure-installation
+  shell:
+    echo -e "{{ secure }}" | sudo mysql_secure_installation
+  args:
+    executable: /bin/bash
+
+# Import MariaDB config
+- name: Set up configuration
+  copy:
+    src: 50-server-debian.cnf
+    dest: "{{ config }}"
+    owner: root
+    group: root
+    mode: '0755'
+
+# Restart mariadb and apply changes
+- name: Apply changes in MariaDB
+  service:
+    name: mariadb
+    enabled: true
+    state: restarted
+
+# Create Wordpress database
+- name: create database
+  mysql_db:
+    name: wordpress
+    login_user: root
+    login_password: Viewnext
+    state: present
+
+# user creation for database
+- name: Create user for wordpress database
+  mysql_user:
+    login_user: root
+    login_password: Viewnext
+    name: vagrant
+    password: Viewnext
+    priv: 'wordpress.*:ALL,GRANT'
+    host: '%'
+    state: present
+
+# Enable MariaDB in firewall
+- name: Enable MariaDB service in firewall
+  ufw:
+    state: enabled
+
+# Open port 3306 for remote connections
+- name: Open port 3306 in firewall
+  ufw:
+    rule: allow
+    port: "3306"
+    proto: tcp
+
+# Open ssh port (22)
+- name: open port 22 in firewall
+  ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+
+# Reload fireall service
+- name: Reload firewall service
+  ufw:
+    state: reloaded

@@ -1,0 +1,18 @@
+---
+# vars file for roles
+
+# URL de la clave GPG para Docker
+gitdocker: "https://download.docker.com/linux/debian/gpg"
+
+# Repositorio de Docker para Debian Buster
+repodocker: "deb [arch=amd64] https://download.docker.com/linux/debian bookworm stable"
+
+# URL del archivo ZIP de AWX
+awx: "https://github.com/ansible/awx/archive/17.1.0.zip"
+
+# Ruta para el instalador de AWX
+path: "/tmp/awx-17.1.0/installer"
+
+# Usuario y contraseña del administrador de AWX
+admin: "ivant"
+adminpass: "Ivancasillas36"

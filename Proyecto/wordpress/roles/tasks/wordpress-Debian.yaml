@@ -1,0 +1,61 @@
+---
+# task file for php in Debian
+#-----------------------Instalación Wordpress Debian-----------------------
+# Install required packages
+- name: install required packages
+  apt:
+    name:
+      - php
+      - php-fpm
+      - php-gd
+      - php-xml
+      - php-mbstring
+      - php-mysql
+    state: latest
+
+# Download Wordpress files
+- name: Download Wordpress
+  get_url:
+    url: "{{ wordpress }}"
+    dest: "{{ tmp }}"
+
+# Extract Wordpress archive
+- name: Extract Wordpress files
+  unarchive:
+    src: "{{ tmp }}"
+    dest: "{{ html }}"
+    remote_src: yes
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+# Set up wp-config.php
+- name: Set up wp-config.php
+  copy:
+    src: wp-config.php
+    dest: "{{ wp }}"
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+# Configure nginx for Wordpress
+- name: Import Apache2 configuration for wordpress
+  copy:
+    src: 000-default.conf.j2
+    dest: "{{ proxy }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+# Restart Nginx service
+- name: Restart Apache2 service
+  service:
+    name: apache2
+    state: restarted
+
+# Reboot server
+- name: Reboot remote server
+  reboot:
+    reboot_timeout: 30
+    post_reboot_delay: 30
+

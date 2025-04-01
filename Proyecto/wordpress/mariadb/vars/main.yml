@@ -1,0 +1,5 @@
+---
+# vars file for mariadb
+config: /etc/mysql/mariadb.conf.d/50-server.cnf
+secure: "\nn\nY\nViewnext\nViewnext\nY\nn\nY\nY\n"
+RedHat: /etc/my.cnf.d/mariadb-server.cnf

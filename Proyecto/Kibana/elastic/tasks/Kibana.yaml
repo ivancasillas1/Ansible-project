@@ -1,0 +1,16 @@
+---
+# tasks file for Kibana installation
+#-----------------------Instalación Kibana-----------------------
+# Install Kibana
+- name: install Kibana
+  apt:
+    name: kibana
+    state: present
+    update_cache: yes
+# Enable kibana
+- name: Enable and start kibana
+  service:
+    name: kibana
+    enabled: yes
+    state: started
+...

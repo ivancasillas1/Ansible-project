@@ -1,0 +1,8 @@
+---
+- name: Prometheus and Node Exporter Installation
+  hosts: cliente5
+  become: yes
+  become_method: sudo
+  roles:
+    - roles
+...
