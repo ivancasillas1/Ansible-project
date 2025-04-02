@@ -40,7 +40,7 @@
   wait_for:
     port: 5601
     delay: 10
-    timeout: 60
+    timeout: 180
 
 # Show Kibana verification code
 - name: Show Kibana verification code
