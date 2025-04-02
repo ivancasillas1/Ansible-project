@@ -1,6 +1,13 @@
 ---
 - name: Node-exporter installation
-  hosts: exporter
+  hosts: mariadb
+  become: yes
+  become_method: sudo
+  roles:
+    - roles
+
+- name: Node-exporter installation
+  hosts: wordpress
   become: yes
   become_method: sudo
   roles:
