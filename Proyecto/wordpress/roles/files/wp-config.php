@@ -23,7 +23,7 @@ define( 'DB_USER', 'vagrant' );
 define( 'DB_PASSWORD', 'Viewnext' );
 
 /** Dirección del servidor de MySQL */
-define( 'DB_HOST', '192.168.10.44' );
+define( 'DB_HOST', '192.168.10.45' );
 
 /** Codificación de caracteres de la base de datos */
 define( 'DB_CHARSET', 'utf8mb4' );
