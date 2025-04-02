@@ -15,11 +15,17 @@
     dest: /etc/kibana/kibana.yml
     mode: '0644'
 
-- name: Show enrollment token
+- name: Show elasticsearch enrollment token
   command: /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana
-  register: kibana_token
+  register: elasticsearch_token
 - debug:
-    msg: "Generated Kibana token: {{ kibana_token.stdout }}"
+    msg: "Generated Kibana token: {{ elasticsearch_token.stdout }}"
+
+- name: Show Kibana verification code
+  command: /usr/share/kibana/bin/kibana-verification-code
+  register: kibana_verif_code
+- debug:
+    msg: "Generated Verification code: {{ kibana_verif_code.stdout }}"
 
 # Enable kibana
 - name: Enable and start kibana
