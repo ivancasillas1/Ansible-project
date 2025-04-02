@@ -13,7 +13,7 @@
   template:
     src: kibana.yml
     dest: /etc/kibana/kibana.yml
-    mode: '0644'
+    mode: '0664'
   
 # Show elasticsearch access token
 - name: Show elasticsearch enrollment token
