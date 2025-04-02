@@ -14,7 +14,13 @@
     src: kibana.yml
     dest: /etc/kibana/kibana.yml
     mode: '0644'
-    
+
+- name: Show enrollment token
+  command: /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana
+  register: kibana_token
+- debug:
+    msg: "Generated Kibana token: {{ kibana_token.stdout }}"
+
 # Enable kibana
 - name: Enable and start kibana
   service:
