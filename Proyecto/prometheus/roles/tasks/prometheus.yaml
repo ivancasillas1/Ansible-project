@@ -53,6 +53,12 @@
         cmd: mv {{ prometheus_dir }}/prometheus.yml /etc/prometheus/prometheus.yml
         creates: "/etc/prometheus/prometheus.yml"
 
+    - name: Set Prometheus config
+      ansible.builtin.template:
+        src: prometheus.yml
+        dest: "/etc/prometheus/prometheus.yml"
+        mode: "0644"
+
     - name: Set Prometheus service (systemd)
       ansible.builtin.template:
         src: prometheus.service.j2
