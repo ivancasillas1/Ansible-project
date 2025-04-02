@@ -7,6 +7,14 @@
     name: kibana
     state: present
     update_cache: yes
+
+# Set kibana configuration file
+- name: Set Kibana config file
+  template:
+    src: kibana.yml
+    dest: /etc/kibana/kibana.yml
+    mode: '0644'
+    
 # Enable kibana
 - name: Enable and start kibana
   service:
