@@ -35,6 +35,13 @@
     name: kibana
     state: restarted
 
+# Wait for kibana to be running
+- name: Wait for Kibana to start
+  wait_for:
+    port: 5601
+    delay: 10
+    timeout: 60
+
 # Show Kibana verification code
 - name: Show Kibana verification code
   command: /usr/share/kibana/bin/kibana-verification-code
