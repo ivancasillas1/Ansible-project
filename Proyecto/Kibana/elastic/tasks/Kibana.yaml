@@ -41,11 +41,11 @@
 - debug:
     msg: "Generated Verification code: {{ kibana_verif_code.stdout }}"
 
-#- name: Reset Elasticsearch password
-#  command: /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic --silent
-#  register: elastic_password_reset
+- name: Reset Elasticsearch password
+  command: /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+  register: elastic_password_reset
 
-#- name: Show new elastic user password
-#  debug:
-#    msg: "New Elastic password: {{ elastic_password_reset.stdout }}"
+- name: Show new elastic user password
+  debug:
+    msg: "New Elastic password: {{ elastic_password_reset.stdout }}"
 ...
