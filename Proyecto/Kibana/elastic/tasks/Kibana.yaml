@@ -2,37 +2,37 @@
 # tasks file for Kibana installation
 #-----------------------Instalación Kibana-----------------------
 # Install Kibana
-#- name: install Kibana
-#  apt:
-#    name: kibana
-#    state: present
-#    update_cache: yes
+- name: install Kibana
+  apt:
+    name: kibana
+    state: present
+    update_cache: yes
 
 # Set kibana configuration file
-#- name: Set Kibana config file
-#  template:
-#    src: kibana.yml
-#    dest: /etc/kibana/kibana.yml
-#    mode: '0664'
+- name: Set Kibana config file
+  template:
+    src: kibana.yml
+    dest: /etc/kibana/kibana.yml
+    mode: '0664'
   
 # Show elasticsearch access token
-#- name: Show elasticsearch enrollment token
-#  command: /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana
-#  register: elasticsearch_token
-#- debug:
-#    msg: "Generated Kibana token: {{ elasticsearch_token.stdout }}"
+- name: Show elasticsearch enrollment token
+  command: /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana
+  register: elasticsearch_token
+- debug:
+    msg: "Generated Kibana token: {{ elasticsearch_token.stdout }}"
 
 # Enable kibana
-#- name: Enable and start kibana
-#  service:
-#    name: kibana
-#    enabled: yes
-#    state: started
+- name: Enable and start kibana
+  service:
+    name: kibana
+    enabled: yes
+    state: started
 
 # Wait for kibana to be running
-#- name: Wait for Kibana to fully start
-#  pause:
-#    seconds: 180
+- name: Wait for Kibana to fully start
+  pause:
+    seconds: 180
 
 # Show Kibana verification code
 - name: Show Kibana verification code
