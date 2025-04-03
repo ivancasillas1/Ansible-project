@@ -42,7 +42,7 @@
     msg: "Generated Verification code: {{ kibana_verif_code.stdout }}"
 
 - name: Reset Elasticsearch password
-  command: /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+  command: /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic --batch --silent
   register: elastic_password_reset
 
 - name: Show new elastic user password
