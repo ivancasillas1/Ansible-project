@@ -1,0 +1,5 @@
+---
+# vars file for apache
+apache_exporter_version: "1.0.10"
+prometheus_user: "prometheus"
+prometheus_group: "prometheus"
