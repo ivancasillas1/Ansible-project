@@ -4,7 +4,7 @@
     name: ufw
     state: present
 
-- name: Permit tráafic throgh port 9117 for Apache Exporter
+- name: Permit tráafic through port 9117 for Apache Exporter
   ufw:
     rule: allow
     port: "9117"
