@@ -29,6 +29,26 @@ vagrant@Cliente3:~/Proyecto/exporter/mysql/tasks$ cat mysql.yaml
     group: "{{ prometheus_group }}"
     mode: '0755'
 
+- name: Create MySQL exporter configuration file
+  copy:
+    dest: "/etc/.mysqld_exporter.cnf"
+    content: |
+      [client]
+      user=exporter
+      password=yourpassword
+      host=localhost
+  owner: "{{ prometheus_user }}"
+  group: "{{ prometheus_group }}"
+  mode: '0600'
+
+- name: Create MySQL exporter user with necessary privileges
+  mysql_user:
+    name: exporter
+    password: ivancasillas36
+    priv: "*.*:PROCESS,REPLICATION CLIENT"
+    host: localhost
+    state: present
+
 - name: Create systemd service for MySQL exporter
   copy:
     dest: "/etc/systemd/system/mysqld_exporter.service"
