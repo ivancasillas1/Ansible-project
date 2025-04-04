@@ -1,4 +1,19 @@
 ---
+- name: Install UFW
+  apt:
+    name: ufw
+    state: present
+
+- name: Permit tráafic throgh port 9117 for Apache Exporter
+  ufw:
+    rule: allow
+    port: "9117"
+    proto: tcp
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+
 - name: Create Prometheus user
   user:
     name: "{{ prometheus_user }}"
