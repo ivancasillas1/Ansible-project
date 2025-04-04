@@ -1,8 +1,20 @@
 ---
-# tasks file for mysql
-- include_tasks: mysql.yaml
-vagrant@Cliente3:~/Proyecto/exporter/mysql/tasks$ cat mysql.yaml
----
+# tasks file for mysq
+- name: Instalar UFW
+  apt:
+    name: ufw
+    state: present
+
+- name: Permitir tráfico en el puerto 9104 para MySQL Exporter
+  ufw:
+    rule: allow
+    port: "9104"
+    proto: tcp
+
+- name: Habilitar UFW
+  ufw:
+    state: enabled
+    
 - name: Create prometheus user
   user:
     name: "{{ prometheus_user }}"
