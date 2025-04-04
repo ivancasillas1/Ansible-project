@@ -1,0 +1,5 @@
+---
+# vars file for mysql
+mysql_exporter_version: "0.17.2"
+prometheus_user: "prometheus"
+prometheus_group: "prometheus"
