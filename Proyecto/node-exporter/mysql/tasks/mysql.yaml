@@ -1,17 +1,17 @@
 ---
 # tasks file for mysq
-- name: Instalar UFW
+- name: Install UFW
   apt:
     name: ufw
     state: present
 
-- name: Permitir tráfico en el puerto 9104 para MySQL Exporter
+- name: Permit trafic through 9104 for MySQL Exporter
   ufw:
     rule: allow
     port: "9104"
     proto: tcp
 
-- name: Habilitar UFW
+- name: Enable UFW
   ufw:
     state: enabled
     
