@@ -1,4 +1,21 @@
 ---
+- name: Instalar UFW si no está presente
+  apt:
+    name: ufw
+    state: present
+  become: true
+
+- name: Permitir tráfico para mysqld_exporter (9104/tcp)
+  ufw:
+    rule: allow
+    port: "9104"
+    proto: tcp
+  become: true
+
+- name: Habilitar UFW
+  ufw:
+    state: enabled
+  become: true
 - name: Crear usuario prometheus
   user:
     name: "{{ prometheus_user }}"
