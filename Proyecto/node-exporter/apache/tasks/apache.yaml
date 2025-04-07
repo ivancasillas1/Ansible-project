@@ -6,20 +6,20 @@
     shell: "/sbin/nologin"
     create_home: no
 
-- name: Instalar UFW si no está presente
+- name: Install UFW 
   apt:
     name: ufw
     state: present
   become: true
 
-- name: Permitir tráfico para apache_exporter (9117/tcp)
+- name: Allow trafic for apache_exporter (9117/tcp)
   ufw:
     rule: allow
     port: "9117"
     proto: tcp
   become: true
 
-- name: Habilitar UFW
+- name: Enable UFW
   ufw:
     state: enabled
   become: true
