@@ -1,26 +1,28 @@
 ---
-- name: Install UFW
-  apt:
-    name: ufw
-    state: present
-
-- name: Permit tráafic through port 9117 for Apache Exporter
-  ufw:
-    rule: allow
-    port: "9117"
-    proto: tcp
-
-- name: Enable UFW
-  ufw:
-    state: enabled
-
----
 - name: Create Prometheus user
   user:
     name: "{{ prometheus_user }}"
     system: yes
     shell: "/sbin/nologin"
     create_home: no
+
+- name: Instalar UFW si no está presente
+  apt:
+    name: ufw
+    state: present
+  become: true
+
+- name: Permitir tráfico para apache_exporter (9117/tcp)
+  ufw:
+    rule: allow
+    port: "9117"
+    proto: tcp
+  become: true
+
+- name: Habilitar UFW
+  ufw:
+    state: enabled
+  become: true
 
 - name: Download Apache Exporter
   get_url:
@@ -51,7 +53,7 @@
 
       [Service]
       User={{ prometheus_user }}
-      ExecStart=/usr/local/bin/apache_exporter --scrape_uri=http://localhost/server-status?auto --web.listen-address=0.0.0.0:9117
+      ExecStart=/usr/local/bin/apache_exporter --scrape_uri=http://localhost/server-status?auto  --web.listen-address=0.0.0.0:9104
       Restart=always
 
       [Install]
