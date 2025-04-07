@@ -1,75 +1,51 @@
 ---
-# tasks file for mysq
-- name: Install UFW
-  apt:
-    name: ufw
-    state: present
-  become: true
-
-- name: Allow traffic through port 9104 for MySQL Exporter
-  ufw:
-    rule: allow
-    port: "9104"
-    proto: tcp
-  become: true
-
-- name: Enable UFW
-  ufw:
-    state: enabled
-  become: true
-
-- name: Create prometheus user
+- name: Crear usuario prometheus
   user:
     name: "{{ prometheus_user }}"
     system: yes
     shell: "/sbin/nologin"
     create_home: no
-  become: true
 
-- name: Download MySQL Exporter
+- name: Crear usuario de MySQL exporter con privilegios necesarios
+  mysql_user:
+    name: exporter
+    password: Ivancasillas36
+    priv: "*.*:PROCESS,REPLICATION CLIENT"
+    host: "%"
+    state: present
+
+- name: Descargar MySQL Exporter
   get_url:
     url: "https://github.com/prometheus/mysqld_exporter/releases/download/v{{ mysql_exporter_version }}/mysqld_exporter-{{ mysql_exporter_version }}.linux-amd64.tar.gz"
     dest: "/tmp/mysqld_exporter.tar.gz"
 
-- name: Extract MySQL Exporter
+- name: Extraer MySQL Exporter
   unarchive:
     src: "/tmp/mysqld_exporter.tar.gz"
     dest: "/usr/local/bin/"
     remote_src: yes
     extra_opts: ["--strip-components=1"]
-  become: true
 
-- name: Set permissions for MySQL Exporter
+- name: Establecer permisos para MySQL Exporter
   file:
     path: "/usr/local/bin/mysqld_exporter"
     owner: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
     mode: '0755'
-  become: true
 
-- name: Create MySQL exporter configuration file
+- name: Crear archivo de configuración para MySQL Exporter
   copy:
     dest: "/etc/.mysqld_exporter.cnf"
     content: |
       [client]
       user=exporter
       password=Ivancasillas36
-      host=localhost
+      host=%
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
     mode: '0600'
-  owner: "{{ prometheus_user }}"
-  group: "{{ prometheus_group }}"
-  become: true
 
-- name: Create MySQL exporter user with necessary privileges
-  mysql_user:
-    name: exporter
-    password: Ivancasillas36
-    priv: "*.*:PROCESS,REPLICATION CLIENT"
-    host: localhost
-    state: present
-  become: true
-
-- name: Create systemd service for MySQL Exporter
+- name: Crear servicio systemd para MySQL Exporter
   copy:
     dest: "/etc/systemd/system/mysqld_exporter.service"
     content: |
@@ -84,13 +60,11 @@
 
       [Install]
       WantedBy=multi-user.target
-  become: true
 
-- name: Reload systemd and enable MySQL Exporter service
+- name: Recargar systemd y habilitar servicio MySQL Exporter
   systemd:
     daemon_reload: yes
     name: mysqld_exporter
     enabled: yes
     state: started
-  become: true
 ...
