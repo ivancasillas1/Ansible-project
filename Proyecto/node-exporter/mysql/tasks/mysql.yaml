@@ -49,10 +49,10 @@
       user=exporter
       password=yourpassword
       host=localhost
+    mode: '0600'
   owner: "{{ prometheus_user }}"
   group: "{{ prometheus_group }}"
-  mode: '0600'
-
+  
 - name: Create MySQL exporter user with necessary privileges
   mysql_user:
     name: exporter
