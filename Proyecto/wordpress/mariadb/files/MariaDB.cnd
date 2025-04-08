@@ -1,4 +1,4 @@
 [cliente]
 user=root
 password=Viewnext
-host=192.168.10.45
+host=172.26.203.192
