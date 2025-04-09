@@ -1,0 +1,37 @@
+# ======================== Elasticsearch Configuration =========================
+
+# Nombre del nodo
+node.name: Cliente6
+
+# Nombre del clúster (opcional, puede dejarse por defecto)
+cluster.name: elastic-cluster
+
+# Rutas de datos y logs
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+
+# Acceso a red (HTTP)
+network.host: 0.0.0.0
+# Puerto HTTP (opcional si usas el default 9200)
+# http.port: 9200
+
+# Descubrimiento de clúster: configuración para un solo nodo
+discovery.type: single-node
+
+# ------------------- Seguridad auto configurada -------------------
+
+xpack.security.enabled: true
+xpack.security.enrollment.enabled: true
+
+# HTTPS para clientes (curl, Kibana, etc.)
+xpack.security.http.ssl:
+  enabled: true
+  keystore.path: certs/http.p12
+
+# TLS para transporte entre nodos (aunque tengas uno solo, debe estar bien configurado)
+xpack.security.transport.ssl:
+  enabled: true
+  verification_mode: certificate
+  keystore.path: certs/transport.p12
+  truststore.path: certs/transport.p12
+
