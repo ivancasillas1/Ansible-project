@@ -1,24 +1,3 @@
-input {
-  beats {
-    port => 5044
-  }
-}
-
-filter {
-  if [fields][log_type] == "apache_access" {
-    grok {
-      match => { "message" => "%{COMBINEDAPACHELOG}" }
-    }
-    date {
-      match => ["timestamp", "dd/MMM/yyyy:HH:mm:ss Z"]
-      target => "@timestamp"
-    }
-  }
-}
-
-output {
-  elasticsearch {
-    hosts => ["http://localhost:9200"]
-    index => "apache-logs-%{+YYYY.MM.dd}"
-  }
-}
+eyJ2ZXIiOiI4LjE0LjAiLCJhZHIiOlsiMTcyLjI2LjIwMy4xOTM6OTIwMCJdLCJmZ3IiOiI2ZjM2NjFiODAzMTVhZjVmMjI5ZGM3YzE1ZTRkNjkyYzg0NDRlYTYyNzE1MDk4ODFkOTk4MjBlMGY0MTQzYjBiIiwia2V5IjoiM09XM0dwWUJUZWduZElENDJMVDY6a3I3TzVkZDBUVUtGWlJKMzdDcTBpZyJ9
+143 873 
+JzI5=MuHHvmetPueCIrW
