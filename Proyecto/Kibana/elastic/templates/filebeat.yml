@@ -1,55 +1,10 @@
-# ============================== Filebeat modules config ===============================
-filebeat.config.modules:
-  path: ${path.config}/modules.d/*.yml
-  reload.enabled: false
-# ============================== Filebeat inputs ===============================
-
-filebeat.inputs:
-  - type: log
-    enabled: true
-    paths:
-      - /var/log/apache2/access.log
-      - /var/log/apache2/error.log
-    fields:
-      log_type: apache_access
-
-# ============================== Filebeat modules =============================
-# (Esto se puede activar por separado con: `filebeat modules enable apache`)
-# modules:
-# - module: apache
-#   access:
-#     enabled: true
-#     var.paths: ["/var/log/apache2/access.log*"]
-#   error:
-#     enabled: true
-#     var.paths: ["/var/log/apache2/error.log*"]
-
-# ======================= Elasticsearch output ===============================
-# (Desactivado si usamos Logstash)
-# output.elasticsearch:
-#   hosts: ["localhost:9200"]
-
-# ============================== Logstash output ==============================
-output.logstash:
-  hosts: ["172.26.203.193:5044"]
-
-# ============================== Logging ======================================
-logging.level: info
-logging.to_files: true
-logging.files:
-  path: /var/log/filebeat
-  name: filebeat.log
-  keepfiles: 7
-  permissions: 0644
-
-# ============================== Kibana (opcional) ============================
-# Usado solo para setup dashboards (si tienes Kibana accesible desde aquí)
-setup.kibana:
-  host: "http://172.26.203.193:5601"
-  username: "elastic"
-  password: "Ivancasillas36"
-
-# ============================== Dashboards ===================================
-# Habilitar si usas módulos (como apache) y quieres cargar dashboards
-# setup.dashboards.enabled: true
-
+[2025-04-09T13:47:12,143][WARN ][o.e.d.PeerFinder         ] [Monitor] address [127.0.0.1:9300], node [unknown] discovery result: [Monitor][172.26.0.99:9300] successfully discovered local node {Monitor}{ehidIJkfQyqGmKVw8aJRlA}{AdQgl99lQmqOScDELro6DQ}{Monitor}{172.26.0.99}{172.26.0.99:9300}{cdfhilmrstw}{8.17.4}{7000099-8521000} at [127.0.0.1:9300]; for summary, see logs from org.elasticsearch.cluster.coordination.ClusterFormationFailureHelper; for troubleshooting guidance, see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/discovery-troubleshooting.html
+[2025-04-09T13:47:12,146][WARN ][o.e.d.PeerFinder         ] [Monitor] address [[::1]:9300], node [unknown] discovery result: [Monitor][172.26.0.99:9300] successfully discovered local node {Monitor}{ehidIJkfQyqGmKVw8aJRlA}{AdQgl99lQmqOScDELro6DQ}{Monitor}{172.26.0.99}{172.26.0.99:9300}{cdfhilmrstw}{8.17.4}{7000099-8521000} at [[::1]:9300]; for summary, see logs from org.elasticsearch.cluster.coordination.ClusterFormationFailureHelper; for troubleshooting guidance, see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/discovery-troubleshooting.html
+[2025-04-09T13:47:12,962][INFO ][o.e.n.Node               ] [Monitor] stopping ...
+[2025-04-09T13:47:12,969][INFO ][o.e.x.w.WatcherService   ] [Monitor] stopping watch service, reason [shutdown initiated]
+[2025-04-09T13:47:12,970][INFO ][o.e.x.w.t.s.e.TickerScheduleTriggerEngine] [Monitor] Stopping watcher engine
+[2025-04-09T13:47:12,970][INFO ][o.e.x.w.WatcherLifeCycleService] [Monitor] watcher has stopped and shutdown
+[2025-04-09T13:47:12,998][INFO ][o.e.x.m.p.l.CppLogMessageHandler] [Monitor] [controller/6198] [Main.cc@176] ML controller exiting
+[2025-04-09T13:47:12,999][INFO ][o.e.x.m.p.NativeController] [Monitor] Native controller process has stopped - no new native processes can be started
+[2025-04-09T13:47:13,106][INFO ][o.e.n.Node               ] [Monitor] stopped
+[2025-04-09T13:47:13,106][INFO ][o.e.n.Node               ] [Monitor] closing ...
