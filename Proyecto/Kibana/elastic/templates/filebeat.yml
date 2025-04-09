@@ -1,3 +1,24 @@
-1. eyJ2ZXIiOiI4LjE0LjAiLCJhZHIiOlsiMTcyLjI2LjAuOTk6OTIwMCJdLCJmZ3IiOiI2ZjM2NjFiODAzMTVhZjVmMjI5ZGM3YzE1ZTRkNjkyYzg0NDRlYTYyNzE1MDk4ODFkOTk4MjBlMGY0MTQzYjBiIiwia2V5IjoiNW9kaEdwWUJseG1oQW5UY1hCUXA6S180bGtHd0xTenlLRVRPWWlUUmRidyJ9
-2. 081 188
-3. 4IITiGDoO0KuDQHGxXw5
+input {
+  beats {
+    port => 5044
+  }
+}
+
+filter {
+  if [fields][log_type] == "apache_access" {
+    grok {
+      match => { "message" => "%{COMBINEDAPACHELOG}" }
+    }
+    date {
+      match => ["timestamp", "dd/MMM/yyyy:HH:mm:ss Z"]
+      target => "@timestamp"
+    }
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["http://localhost:9200"]
+    index => "apache-logs-%{+YYYY.MM.dd}"
+  }
+}
