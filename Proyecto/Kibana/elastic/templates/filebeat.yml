@@ -1,2 +1,3 @@
-Exiting: /var/lib/filebeat/filebeat.lock: data path already locked by another beat. Please make sure that multiple beats are not sharing the same data path (path.data)
-rds.enabled: true
+1. eyJ2ZXIiOiI4LjE0LjAiLCJhZHIiOlsiMTcyLjI2LjAuOTk6OTIwMCJdLCJmZ3IiOiI2ZjM2NjFiODAzMTVhZjVmMjI5ZGM3YzE1ZTRkNjkyYzg0NDRlYTYyNzE1MDk4ODFkOTk4MjBlMGY0MTQzYjBiIiwia2V5IjoiNW9kaEdwWUJseG1oQW5UY1hCUXA6S180bGtHd0xTenlLRVRPWWlUUmRidyJ9
+2. 081 188
+3. 4IITiGDoO0KuDQHGxXw5
