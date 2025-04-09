@@ -1,3 +1,55 @@
-eyJ2ZXIiOiI4LjE0LjAiLCJhZHIiOlsiMTcyLjI2LjIwMy4xOTM6OTIwMCJdLCJmZ3IiOiI2ZjM2NjFiODAzMTVhZjVmMjI5ZGM3YzE1ZTRkNjkyYzg0NDRlYTYyNzE1MDk4ODFkOTk4MjBlMGY0MTQzYjBiIiwia2V5IjoiM09XM0dwWUJUZWduZElENDJMVDY6a3I3TzVkZDBUVUtGWlJKMzdDcTBpZyJ9
-143 873 
-JzI5=MuHHvmetPueCIrW
+# ============================== Filebeat modules config ===============================
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+# ============================== Filebeat inputs ===============================
+
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/apache2/access.log
+      - /var/log/apache2/error.log
+    fields:
+      log_type: apache_access
+
+# ============================== Filebeat modules =============================
+# (Esto se puede activar por separado con: `filebeat modules enable apache`)
+# modules:
+# - module: apache
+#   access:
+#     enabled: true
+#     var.paths: ["/var/log/apache2/access.log*"]
+#   error:
+#     enabled: true
+#     var.paths: ["/var/log/apache2/error.log*"]
+
+# ======================= Elasticsearch output ===============================
+# (Desactivado si usamos Logstash)
+# output.elasticsearch:
+#   hosts: ["localhost:9200"]
+
+# ============================== Logstash output ==============================
+output.logstash:
+  hosts: ["172.26.203.193:5044"]
+
+# ============================== Logging ======================================
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat.log
+  keepfiles: 7
+  permissions: 0644
+
+# ============================== Kibana (opcional) ============================
+# Usado solo para setup dashboards (si tienes Kibana accesible desde aquí)
+setup.kibana:
+  host: "http://172.26.203.193:5601"
+  username: "elastic"
+  password: "Ivancasillas36"
+
+# ============================== Dashboards ===================================
+# Habilitar si usas módulos (como apache) y quieres cargar dashboards
+# setup.dashboards.enabled: true
+
