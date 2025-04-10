@@ -3,6 +3,7 @@
   hosts: mariadb
   become: yes
   become_method: sudo
+  ignore_unreachable: yes
   roles:
     - roles
     - mysql
@@ -11,6 +12,7 @@
   hosts: wordpress
   become: yes
   become_method: sudo
+  ignore_unreachable: yes
   roles:
     - roles
     - apache
