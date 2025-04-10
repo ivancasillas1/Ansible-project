@@ -14,6 +14,10 @@
     src: kibana.yml
     dest: /etc/kibana/kibana.yml
     mode: '0664'
+
+- name: Wait for Kibana to fully start
+  pause:
+    seconds: 180
   
 # Show elasticsearch access token
 - name: Show elasticsearch enrollment token
