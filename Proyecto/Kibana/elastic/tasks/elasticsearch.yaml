@@ -25,12 +25,12 @@
     state: present
     update_cache: yes
 
-# Set kibana configuration file
-#- name: Set elasticsearch config file
- # template:
- #   src: elasticsearch.yml
- #   dest: /etc/elasticsearch/elasticsearch.yml
- #   mode: '0664'
+ Set kibana configuration file
+- name: Set elasticsearch config file
+  template:
+    src: elasticsearch.yml
+    dest: /etc/elasticsearch/elasticsearch.yml
+    mode: '0664'
 
 - name: Enable ant start Elasticsearch
   service:
