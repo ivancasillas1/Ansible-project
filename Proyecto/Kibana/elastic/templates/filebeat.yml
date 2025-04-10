@@ -1,3 +1,11 @@
-eyJ2ZXIiOiI4LjE0LjAiLCJhZHIiOlsiMTcyLjI2LjIwMy4xOTE6OTIwMCJdLCJmZ3IiOiIxYzljNDc2Nzc4Mzk0MTM3NzU3N2ZkMjMzZjdmNjFhYWVhMjNiYWU3ZGY0MTQyMDZhZGM1NTdiNGU4N2ZiODJiIiwia2V5IjoiYVdqbEhwWUJKMUM2T1V1QUJBLWk6bUhyaTVCWWVUYzJMR0pUd3Y0ankxZyJ9
-278 786
-3WjWvLkP2wkciR61==RO
+ivant@Wordpress:~/elastic-agent-8.17.4-linux-x86_64$ sudo journalctl -u filebeat -f
+abr 10 12:26:02 Wordpress filebeat[10676]: {"log.level":"info","@timestamp":"2025-04-10T12:26:02.482+0200","log.origin":{"function":"github.com/elastic/beats/v7/libbeat/cmd/instance.(*Beat).launch","file.name":"instance/beat.go","file.line":779},"message":"filebeat stopped.","service.name":"filebeat","ecs.version":"1.6.0"}
+abr 10 12:26:02 Wordpress filebeat[10676]: {"log.level":"error","@timestamp":"2025-04-10T12:26:02.483+0200","log.origin":{"function":"github.com/elastic/beats/v7/libbeat/cmd/instance.handleError","file.name":"instance/beat.go","file.line":1594},"message":"Exiting: Failed to start crawler: creating module reloader failed: could not create module registry for filesets: module system is configured but has no enabled filesets","service.name":"filebeat","ecs.version":"1.6.0"}
+abr 10 12:26:02 Wordpress filebeat[10676]: Exiting: Failed to start crawler: creating module reloader failed: could not create module registry for filesets: module system is configured but has no enabled filesets
+abr 10 12:26:02 Wordpress systemd[1]: filebeat.service: Main process exited, code=exited, status=1/FAILURE
+abr 10 12:26:02 Wordpress systemd[1]: filebeat.service: Failed with result 'exit-code'.
+abr 10 12:26:02 Wordpress systemd[1]: filebeat.service: Scheduled restart job, restart counter is at 5.
+abr 10 12:26:02 Wordpress systemd[1]: Stopped filebeat.service - Filebeat sends log files to Logstash or directly to Elasticsearch..
+abr 10 12:26:02 Wordpress systemd[1]: filebeat.service: Start request repeated too quickly.
+abr 10 12:26:02 Wordpress systemd[1]: filebeat.service: Failed with result 'exit-code'.
+abr 10 12:26:02 Wordpress systemd[1]: Failed to start filebeat.service - Filebeat sends log files to Logstash or directly to Elasticsearch..
