@@ -58,7 +58,7 @@
       [client]
       user=exporter
       password=Ivancasillas36
-      host=%
+      host=172.26.203.192
     owner: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
     mode: '0600'
