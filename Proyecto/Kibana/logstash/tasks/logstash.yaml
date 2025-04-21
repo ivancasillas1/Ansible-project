@@ -41,3 +41,17 @@
     enabled: yes
     state: started
     update_cache: yes
+
+- name: Create apache.conf file for logstash
+  template:
+    src: apache.conf
+    dest: /etc/logstash/conf.d/apache.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Restart logstash
+  service:
+    name: logstash
+    state: restarted
+    
