@@ -1,0 +1,43 @@
+---
+- name: Install neccessary dependences
+  apt:
+    name: apt-trasnsport-https
+    state: present
+    update_cache: yes
+
+- name: Add OpenJDK 17 repository
+  apt:
+    name: openjdk-17-jdk
+    state: present
+
+- name: verify java installation
+  command: java -version
+  register: java_version_output
+  ignore_errors: yes
+
+- name: Show Java version
+  debug:
+    msg: "{{ java_version_output.stdout }}"
+
+- name: Add Elastic GPG Key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Add logstash repository
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/8.x/apt stable main'
+    state: present
+    filename: 'elastic-8.x'
+
+- name: Install logstash
+  apt:
+    name: logstash
+    state: present
+
+- name: Start and enable logstash
+  service:
+    name: logstash
+    enabled: yes
+    state: started
+    update_cache: yes
