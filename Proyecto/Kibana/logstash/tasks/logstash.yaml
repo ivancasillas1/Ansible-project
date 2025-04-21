@@ -40,7 +40,6 @@
     name: logstash
     enabled: yes
     state: started
-    update_cache: yes
 
 - name: Create apache.conf file for logstash
   template:
