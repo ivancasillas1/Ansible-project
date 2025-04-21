@@ -2,6 +2,11 @@
 # tasks file for Kibana installation
 #-----------------------Instalación Kibana-----------------------
 # Install Kibana
+- name: Open Kibana port
+  ufw:
+    rule: allow
+    port: "5601"
+
 - name: install Kibana
   apt:
     name: kibana
