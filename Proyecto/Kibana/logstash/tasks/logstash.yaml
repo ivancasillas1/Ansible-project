@@ -1,7 +1,7 @@
 ---
 - name: Install neccessary dependences
   apt:
-    name: apt-trasnsport-https
+    name: apt-transport-https
     state: present
     update_cache: yes
 
