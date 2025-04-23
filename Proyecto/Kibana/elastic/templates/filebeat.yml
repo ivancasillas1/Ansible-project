@@ -1,11 +1,40 @@
-ivant@Wordpress:~$ sudo tail /var/log/apache2/access.log
-::1 - - [23/Apr/2025:16:32:06 +0200] "GET /server-status?auto HTTP/1.1" 200 763 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:32:21 +0200] "GET /server-status?auto HTTP/1.1" 200 764 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:32:36 +0200] "GET /server-status?auto HTTP/1.1" 200 762 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:32:51 +0200] "GET /server-status?auto HTTP/1.1" 200 765 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:33:06 +0200] "GET /server-status?auto HTTP/1.1" 200 761 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:33:21 +0200] "GET /server-status?auto HTTP/1.1" 200 762 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:33:36 +0200] "GET /server-status?auto HTTP/1.1" 200 765 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:33:51 +0200] "GET /server-status?auto HTTP/1.1" 200 764 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:34:06 +0200] "GET /server-status?auto HTTP/1.1" 200 761 "-" "Prometheus-Apache-Exporter/1.0.10"
-127.0.0.1 - - [23/Apr/2025:16:34:06 +0200] "GET / HTTP/1.1" 200 10940 "-" "curl/7.88.1"
+input {
+  file {
+    path => "/var/log/apache2/access.log"
+    start_position => "beginning"
+    sincedb_path => "/dev/null"
+    stat_interval => 2
+    discover_interval => 5
+    codec => "plain"
+  }
+}
+
+filter {
+  grok {
+    match => {
+      "message" => "%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] \"%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}\" %{NUMBER:response} (?:%{NUMBER:bytes}|-)"
+    }
+  }
+
+  date {
+    match => [ "timestamp", "dd/MMM/yyyy:HH:mm:ss Z" ]
+    target => "@timestamp"
+  }
+
+  if "_grokparsefailure" in [tags] {
+    mutate { add_tag => ["grok_failed"] }
+  }
+}
+
+output {
+  stdout { codec => rubydebug }
+
+  elasticsearch {
+    hosts => ["https://172.26.203.193:9200"]
+    user => "elastic"
+    password => "Ivancasillas36"
+    ssl => true
+    ssl_certificate_verification => false
+    index => "apache-logs-%{+YYYY.MM.dd}"
+  }
+}
