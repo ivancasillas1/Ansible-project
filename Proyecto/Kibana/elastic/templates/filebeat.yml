@@ -1,33 +1,13 @@
-::1 - - [23/Apr/2025:16:11:06 +0200] "GET /server-status?auto HTTP/1.1" 200 757 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:11:21 +0200] "GET /server-status?auto HTTP/1.1" 200 757 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:11:36 +0200] "GET /server-status?auto HTTP/1.1" 200 754 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:11:51 +0200] "GET /server-status?auto HTTP/1.1" 200 762 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:12:06 +0200] "GET /server-status?auto HTTP/1.1" 200 759 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:12:21 +0200] "GET /server-status?auto HTTP/1.1" 200 760 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:12:36 +0200] "GET /server-status?auto HTTP/1.1" 200 756 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:12:51 +0200] "GET /server-status?auto HTTP/1.1" 200 757 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:13:06 +0200] "GET /server-status?auto HTTP/1.1" 200 758 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:13:21 +0200] "GET /server-status?auto HTTP/1.1" 200 761 "-" "Prometheus-Apache-Exporter/1.0.10"
-::1 - - [23/Apr/2025:16:13:36 +0200] "GET /server-status?auto HTTP/1.1" 200 758 "-" "Prometheus-Apache-Exporter/1.0.10"
-^C
-ivant@Wordpress:~$ ls -l /var/log/apache2/
-ls: no se puede abrir el directorio '/var/log/apache2/': Permiso denegado
-ivant@Wordpress:~$ sudo ls -l /var/log/apache2/
-total 332
--rw-r----- 1 root adm       0 abr 23 09:35 access_BlogPIivant.log
--rw-r----- 1 root adm   12722 abr 22 14:07 access_BlogPIivant.log.1
--rw-r--r-- 1 root root   3448 abr 21 08:48 access_BlogPIivant.log.2.gz
--rw-r----- 1 root adm  166080 abr 23 16:13 access.log
--rw-r----- 1 root adm   80525 abr 22 17:02 access.log.1
--rw-r----- 1 root adm     169 abr 21 08:48 access.log.2.gz
--rw-r----- 1 root adm    8751 abr 11 10:28 access.log.3.gz
--rw-r----- 1 root adm     678 abr 23 09:35 error_BlogPIivant.log
--rw-r----- 1 root adm    3980 abr 22 16:20 error_BlogPIivant.log.1
--rw-r--r-- 1 root root   1026 abr 21 13:12 error_BlogPIivant.log.2.gz
--rw-r----- 1 root adm     931 abr 23 09:35 error.log
--rw-r----- 1 root adm    5805 abr 22 16:20 error.log.1
--rw-r----- 1 root adm     635 abr 22 00:00 error.log.2.gz
--rw-r----- 1 root adm    2667 abr 11 13:59 error.log.3.gz
--rw-r----- 1 root adm       0 abr 23 09:35 other_vhosts_access.log
--rw-r----- 1 root adm    5003 abr 22 14:07 other_vhosts_access.log.1
--rw-r----- 1 root adm     892 abr 11 11:02 other_vhosts_access.log.2.gz
+ivant@Wordpress:~$ sudo tail -f /var/log/logstash/logstash-plain.log 
+[2025-04-23T16:09:17,326][INFO ][logstash.outputs.elasticsearch][main] Elasticsearch version determined (8.18.0) {:es_version=>8}
+[2025-04-23T16:09:17,337][INFO ][logstash.outputs.elasticsearch][main] Not eligible for data streams because config contains one or more settings that are not compatible with data streams: {"index"=>"apache-logs-%{+YYYY.MM.dd}"}
+[2025-04-23T16:09:17,338][INFO ][logstash.outputs.elasticsearch][main] Data streams auto configuration (`data_stream => auto` or unset) resolved to `false`
+[2025-04-23T16:09:17,343][WARN ][logstash.filters.grok    ][main] ECS v8 support is a preview of the unreleased ECS v8, and uses the v1 patterns. When Version 8 of the Elastic Common Schema becomes available, this plugin will need to be updated
+[2025-04-23T16:09:17,348][INFO ][logstash.outputs.elasticsearch][main] Using a default mapping template {:es_version=>8, :ecs_compatibility=>:v8}
+[2025-04-23T16:09:17,472][INFO ][logstash.javapipeline    ][main] Starting pipeline {:pipeline_id=>"main", "pipeline.workers"=>4, "pipeline.batch.size"=>125, "pipeline.batch.delay"=>50, "pipeline.max_inflight"=>500, "pipeline.sources"=>["/etc/logstash/conf.d/apache.conf"], :thread=>"#<Thread:0x1bf8141 /usr/share/logstash/logstash-core/lib/logstash/java_pipeline.rb:138 run>"}
+[2025-04-23T16:09:18,152][INFO ][logstash.javapipeline    ][main] Pipeline Java execution initialization time {"seconds"=>0.68}
+[2025-04-23T16:09:18,164][INFO ][logstash.javapipeline    ][main] Pipeline started {"pipeline.id"=>"main"}
+[2025-04-23T16:09:18,168][INFO ][filewatch.observingtail  ][main][f2a8873582e303cd781c06c656d7f2af0577e99ab4aeacd564f12b99752a47c2] START, creating Discoverer, Watch with file and sincedb collections
+[2025-04-23T16:09:18,177][INFO ][logstash.agent           ] Pipelines running {:count=>1, :running_pipelines=>[:main], :non_running_pipelines=>[]}
+
+
