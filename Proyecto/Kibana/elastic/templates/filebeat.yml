@@ -1,4 +1,33 @@
-eyJ2ZXIiOiI4LjE0LjAiLCJhZHIiOlsiMTcyLjI2LjIwMy4xOTM6OTIwMCJdLCJmZ3IiOiJlMmJmMDZkMzdhOWQ1YWFhNTg3MTliMzZjNDkzNWQ0MWIyODZjM2RmMWIwZjkwNzEyYWY3NzAwYTE4NzQ1YzY4Iiwia2V5IjoiazRQN1hKWUJrMF9MT3ZxTWd2RmE6RVY4X0wwY3BDNERYUHV6SndZbnBOQSJ9
-789 778
-1ikT-du4yh9Lzjt_014=
-https://discord.com/api/webhooks/1359897139945410680/r0JWMAg613cKCFFI5Q0hshzPsMCDnzAhBgipgsYz9bGU16y4IpnCOCzwZAHVWBSwxecP
+::1 - - [23/Apr/2025:16:11:06 +0200] "GET /server-status?auto HTTP/1.1" 200 757 "-" "Prometheus-Apache-Exporter/1.0.10"
+::1 - - [23/Apr/2025:16:11:21 +0200] "GET /server-status?auto HTTP/1.1" 200 757 "-" "Prometheus-Apache-Exporter/1.0.10"
+::1 - - [23/Apr/2025:16:11:36 +0200] "GET /server-status?auto HTTP/1.1" 200 754 "-" "Prometheus-Apache-Exporter/1.0.10"
+::1 - - [23/Apr/2025:16:11:51 +0200] "GET /server-status?auto HTTP/1.1" 200 762 "-" "Prometheus-Apache-Exporter/1.0.10"
+::1 - - [23/Apr/2025:16:12:06 +0200] "GET /server-status?auto HTTP/1.1" 200 759 "-" "Prometheus-Apache-Exporter/1.0.10"
+::1 - - [23/Apr/2025:16:12:21 +0200] "GET /server-status?auto HTTP/1.1" 200 760 "-" "Prometheus-Apache-Exporter/1.0.10"
+::1 - - [23/Apr/2025:16:12:36 +0200] "GET /server-status?auto HTTP/1.1" 200 756 "-" "Prometheus-Apache-Exporter/1.0.10"
+::1 - - [23/Apr/2025:16:12:51 +0200] "GET /server-status?auto HTTP/1.1" 200 757 "-" "Prometheus-Apache-Exporter/1.0.10"
+::1 - - [23/Apr/2025:16:13:06 +0200] "GET /server-status?auto HTTP/1.1" 200 758 "-" "Prometheus-Apache-Exporter/1.0.10"
+::1 - - [23/Apr/2025:16:13:21 +0200] "GET /server-status?auto HTTP/1.1" 200 761 "-" "Prometheus-Apache-Exporter/1.0.10"
+::1 - - [23/Apr/2025:16:13:36 +0200] "GET /server-status?auto HTTP/1.1" 200 758 "-" "Prometheus-Apache-Exporter/1.0.10"
+^C
+ivant@Wordpress:~$ ls -l /var/log/apache2/
+ls: no se puede abrir el directorio '/var/log/apache2/': Permiso denegado
+ivant@Wordpress:~$ sudo ls -l /var/log/apache2/
+total 332
+-rw-r----- 1 root adm       0 abr 23 09:35 access_BlogPIivant.log
+-rw-r----- 1 root adm   12722 abr 22 14:07 access_BlogPIivant.log.1
+-rw-r--r-- 1 root root   3448 abr 21 08:48 access_BlogPIivant.log.2.gz
+-rw-r----- 1 root adm  166080 abr 23 16:13 access.log
+-rw-r----- 1 root adm   80525 abr 22 17:02 access.log.1
+-rw-r----- 1 root adm     169 abr 21 08:48 access.log.2.gz
+-rw-r----- 1 root adm    8751 abr 11 10:28 access.log.3.gz
+-rw-r----- 1 root adm     678 abr 23 09:35 error_BlogPIivant.log
+-rw-r----- 1 root adm    3980 abr 22 16:20 error_BlogPIivant.log.1
+-rw-r--r-- 1 root root   1026 abr 21 13:12 error_BlogPIivant.log.2.gz
+-rw-r----- 1 root adm     931 abr 23 09:35 error.log
+-rw-r----- 1 root adm    5805 abr 22 16:20 error.log.1
+-rw-r----- 1 root adm     635 abr 22 00:00 error.log.2.gz
+-rw-r----- 1 root adm    2667 abr 11 13:59 error.log.3.gz
+-rw-r----- 1 root adm       0 abr 23 09:35 other_vhosts_access.log
+-rw-r----- 1 root adm    5003 abr 22 14:07 other_vhosts_access.log.1
+-rw-r----- 1 root adm     892 abr 11 11:02 other_vhosts_access.log.2.gz
