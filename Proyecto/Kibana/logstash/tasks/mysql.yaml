@@ -20,9 +20,14 @@
 
 - name: Add Elastic GPG Key
   apt_key:
-    repo: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     state: present
-    filename: "elastic-8.*"
+
+- name: Add logstash repository
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/8.x/apt stable main'
+    state: present
+    filename: 'elastic-8.x'
 
 - name: Install logstash
   apt:
