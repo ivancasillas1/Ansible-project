@@ -60,6 +60,12 @@
     owner: root
     group: adm
     mode: '0644'
+- name: Set permissions on mysql log directory
+  file:
+    path: /var/log/mysql
+    owner: mysql
+    group: adm
+    mode: '0755'
 
 - name: Restart logstash
   service:
