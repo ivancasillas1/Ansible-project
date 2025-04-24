@@ -49,8 +49,20 @@
     group: root
     mode: '0644'
 
+- name: Ensure logstash user is in adm group
+  user:
+    name: logstash
+    groups: adm
+    append: yes
+
+- name: Set permissions on Apache log file
+  file:
+    path: /var/log/apache2/access.log
+    owner: root
+    group: adm
+    mode: '0644'
+
 - name: Restart logstash
   service:
     name: logstash
     state: restarted
-    
