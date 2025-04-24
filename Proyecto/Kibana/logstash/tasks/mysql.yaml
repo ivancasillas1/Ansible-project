@@ -43,7 +43,7 @@
 - name: Create mariadb.conf
   template:
     src: mysql.conf
-    dest: /etc/logstash/config.d/mysql.conf
+    dest: /etc/logstash/conf.d/mysql.conf
     owner: root
     group: root
     mode: '0644'
