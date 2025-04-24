@@ -48,6 +48,14 @@
     group: root
     mode: '0644'
 
+- name: Create error.conf
+  template:
+    src: errors.conf
+    dest: /etc/logstash/conf.d/error.conf
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Ensure logstash user is in adm group 
   user:
     name: logstash
@@ -60,6 +68,14 @@
     owner: root
     group: adm
     mode: '0644'
+
+- name: Set permissions on Mariadb log file
+  file:
+    path: /var/log/mysql/error.log
+    owner: root
+    group: adm
+    mode: '0644'
+
 - name: Set permissions on mysql log directory
   file:
     path: /var/log/mysql
