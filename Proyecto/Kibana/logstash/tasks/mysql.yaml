@@ -69,7 +69,7 @@
     group: adm
     mode: '0644'
 
-- name: Set permissions on Mariadb log file
+- name: Set permissions on error log file
   file:
     path: /var/log/mysql/error.log
     owner: root
