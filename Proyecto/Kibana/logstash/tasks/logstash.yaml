@@ -49,6 +49,14 @@
     group: root
     mode: '0644'
 
+- name: Create error.conf file for logstash
+  template:
+    src: errorapache.conf
+    dest: /etc/logstash/conf.d/error.conf
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Ensure logstash user is in adm group
   user:
     name: logstash
@@ -58,6 +66,13 @@
 - name: Set permissions on Apache log file
   file:
     path: /var/log/apache2/access.log
+    owner: root
+    group: adm
+    mode: '0644'
+
+- name: Set permissions on Apache error log file
+  file:
+    path: /var/log/apache2/error.log
     owner: root
     group: adm
     mode: '0644'
