@@ -20,7 +20,7 @@
 
 - name: Add Elastic GPG Key
   apt_key:
-    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    repo: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     state: present
     filename: "elastic-8.*"
 
