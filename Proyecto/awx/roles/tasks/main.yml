@@ -38,6 +38,7 @@
       - docker-compose
     state: present
 
+# It's needed an python venv to use this installation
 #- name: Install Docker Compose with pip
 #  pip:
 #    name: docker-compose
