@@ -1,1 +1,4 @@
-
+---
+# tasks file for logstash
+- name: install and configure Elasticsearch
+  include_tasks: mysql.yaml
