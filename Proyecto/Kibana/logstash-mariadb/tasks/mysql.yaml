@@ -56,6 +56,11 @@
     owner: mysql
     group: mysql
 
+- name: Restart mariadb
+  service:
+    name: mariadb
+    state: restarted
+
 - name: Create error.conf
   template:
     src: errors.conf
@@ -63,6 +68,7 @@
     owner: root
     group: root
     mode: '0644'
+    
 
 - name: Ensure logstash user is in adm group 
   user:
