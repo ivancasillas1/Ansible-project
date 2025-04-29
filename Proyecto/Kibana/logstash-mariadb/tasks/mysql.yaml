@@ -52,7 +52,7 @@
   file:
     path: /var/log/mysql
     state: directory
-    mode: '2750
+    mode: '2750'
     owner: mysql
     group: mysql
 
