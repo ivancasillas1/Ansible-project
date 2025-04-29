@@ -1,9 +1,0 @@
----
-- name: Upload grafana config
-  copy:
-    src: "{{ grafana_config_template }}"
-    dest: "{{ grafana_config_directory }}/grafana.ini"
-    owner: root
-    group: grafana
-    mode: '0644'
-...

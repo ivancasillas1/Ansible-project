@@ -1,0 +1,3 @@
+---
+# tasks file for elastic
+- include_tasks: "install-{{ ansible_os_family }}.yaml"
