@@ -1,4 +1,0 @@
----
-# defaults file for elastic
-elasticsearch_version: "8.x"
-kibana_version: "8.x"
