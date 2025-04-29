@@ -5,17 +5,3 @@
   become_method: sudo
   roles:
     - elastic
-
-- name: Install logstash
-  hosts: wordpress
-  become: yes
-  become_method: sudo
-  roles:
-    - logstash
-
-- name: Install Logstash in MariaDB
-  hosts: mariadb
-  become: yes
-  become_method: sudo
-  roles:
-    - logstash-mariadb
