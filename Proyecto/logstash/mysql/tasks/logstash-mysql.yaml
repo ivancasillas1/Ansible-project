@@ -1,4 +1,3 @@
----
 - name: Install neccessary dependences
   apt:
     name: apt-transport-https
@@ -15,7 +14,7 @@
   register: java_version_output
   ignore_errors: yes
 
-- name: Show Java version
+- name: show Java version
   debug:
     msg: "{{ java_version_output.stdout }}"
 
@@ -41,46 +40,60 @@
     enabled: yes
     state: started
 
-- name: Create apache.conf file for logstash
+- name: Create mariadb.conf
   template:
-    src: apache.conf
-    dest: /etc/logstash/conf.d/apache.conf
+    src: mysql.conf
+    dest: /etc/logstash/conf.d/mysql.conf
     owner: root
     group: root
     mode: '0644'
 
-- name: Create error.conf file for logstash
+- name: Create /var/log/mysql directory
+  file:
+    path: /var/log/mysql
+    state: directory
+    mode: '2750'
+    owner: mysql
+    group: mysql
+
+- name: Restart mariadb
+  service:
+    name: mariadb
+    state: restarted
+
+- name: Create error.conf
   template:
-    src: errorapache.conf
+    src: errors.conf
     dest: /etc/logstash/conf.d/error.conf
     owner: root
     group: root
     mode: '0644'
+    
 
-- name: Ensure logstash user is in adm group
+- name: Ensure logstash user is in adm group 
   user:
     name: logstash
     groups: adm
     append: yes
 
-- name: Set permissions on Apache log file
+- name: Set permissions on Mariadb log file
   file:
-    path: /var/log/apache2/access.log
+    path: /var/log/mysql/mysql.log
     owner: root
     group: adm
     mode: '0644'
 
-- name: Set permissions on Apache error log file
+- name: Set permissions on error log file
   file:
-    path: /var/log/apache2/error.log
+    path: /var/log/mysql/error.log
     owner: root
     group: adm
     mode: '0644'
 
-- name: Set permissions on apache log directory
+- name: Set permissions on mysql log directory
   file:
-    path: /var/log/apache2
-    owner: root
+    path: /var/log/mysql
+    owner: mysql
     group: adm
     mode: '0755'
 
