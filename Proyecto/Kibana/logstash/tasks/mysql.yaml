@@ -62,6 +62,14 @@
     groups: adm
     append: yes
 
+- name: Create /var/log/mysql directory
+  file:
+    path: /var/log/mysql
+    state: directory
+    mode: '2750
+    owner: mysql
+    group: mysql
+
 - name: Set permissions on Mariadb log file
   file:
     path: /var/log/mysql/mysql.log
