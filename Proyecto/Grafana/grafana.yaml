@@ -1,5 +1,5 @@
 ---
-- name: kibana installation
+- name: Grafana installation
   hosts: visualizador
   become: yes
   become_method: sudo
