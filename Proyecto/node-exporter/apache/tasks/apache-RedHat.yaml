@@ -1,0 +1,76 @@
+---
+- name: Ensure required pacakges are installed
+  ansible.builtin.yum:
+    name:
+      - firewalld
+      - wget
+      - tar
+    state: present
+
+- name: Ensure firewalld is running
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Allow Apache Exporter port (9117)
+  ansible.builtin.firewalld:
+    port: 9117/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Create Prometheus group
+  ansible.builtin.group:
+    name: "{{ prometheus_group }}"
+    state: present
+
+- name: Create Prometheus user
+  ansible.builtin.user:
+    name: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    system: yes
+    shell: /sbin/nologin
+    create_home: no
+
+- name: Download Apache Exporter
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus/apache_exporter/releases/download/v{{ apache_exporter_version }}/apaceh-exporter-{{ apache_exporter_version }}.linux-amd64.atr.gz"
+    dest: /tmp/apaceh_exporter.tar.gz"
+
+- name: Extract Apache exporter
+  ansible.builtin.unarchive:
+    src: "/tmp/apache_exporter.tar.gz"
+    dest: "/usr/local/bin"
+    remote_src: yes
+    extra_opts: ["--stript-components=1"]
+
+- name: Set permissions on Apache Exporter binary
+  ansible.builtin.file:
+    path: "/usr/local/bin/apache_exporter"
+    mode: "0755"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+- name: Create systemd service dor Apache exporter
+  ansible.builtin.copy:
+    dest: "/etc/systemd/system/apache_exporter.service"
+    content: |
+      [Unit]
+      Description=Prometheus Apache Exporter
+      After=network.target
+
+      [Service]
+      User={{ prometheus_user }}
+      ExecStart=/usr/local/bin/apache_exporter --scrape_uri=https://localhost/server-status?auto --web.listen-address=0.0.0.0:9117
+      Restart=always
+
+      [Install]
+      WantedBy=multi-usre.target
+    mode: "0644"
+
+  - name: Reload systemd and start Apache Exporter
+    ansible.builtin.systemd:
+      daemon_reload: yes
+      enabled: yes
+      state: started
+...
