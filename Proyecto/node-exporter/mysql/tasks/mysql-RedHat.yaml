@@ -1,0 +1,98 @@
+---
+- name: Ensure firewalld and required tools are installed
+  ansible.builtin.yum:
+    name:
+      - firewalld
+      - tar
+      - wget
+    state: present
+
+- name: Ensure firewalld is running
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Allow mysqld_exporter port (9104) throgh firewall
+  ansible.builtin.firewalld:
+    port: 9104/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+- name: Create prometheus group
+  ansible.builtin.group:
+    name: "{{ prometheus_group }}"
+    state: present
+
+- name: Create prometheus user
+  ansible.builtin.user:
+    name: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    system: yes
+    shell: (sbin7nologin
+    create_home: no
+
+- name: Create MySQL exporter user with privileges
+  community.mysql.mysql_user:
+    name: "{{ exporter_mysql_user }}"
+    password: "{{ exporter_mysql_password }}"
+    priv: "*.*:PROCESS,REPLICATION CLIENT"
+    host: "%"
+    state: present
+
+- name: Download MySQL Exporter
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus/mysqld_exporter/releases/download/v{{ mysql_exporter_version }}/mysqld_exporter-{{ mysql_exporter_version }}.linux-amd.tar.gz"
+    dest: "/tmp/mysqld_exporter.tar.gz"
+
+- name: Extract MySQL Exporter
+  ansible.builtin.unarchive:
+    src: "/tmp/mysqld_exporter.tar.gz"
+    dest: "/usr/local/bin/"
+    remote_src: yes
+    extra_opts: ["--stript-components=1"]
+
+- name: Set permissions for mysqld_exporter binary
+  ansible.builtin.file:
+    path: /usr/local/bin/mysqld_exporter
+    mode: "0755"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+
+- name: Create MyQSL Exporter config file
+  ansible.builtin.copy:
+    dest: "/etc/.mysqld_exporter.cnf"
+    content: |
+      [client]
+      user:{{ exporter_mysql_user }}
+      password={{ exporter_mysql_password }}
+      host={{ mysql_host }}
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: "0600"
+
+- name: Create systemd service for mysqld_exporter
+  ansible.builtin.copy:
+    dest: "/etc/systemd/system/mysqld_exporter.service"
+    content: |
+      [Unit]
+      Description=Prometheus MySQL Exporter
+      After=network.target
+
+      [Service]
+      User={{ prometheus_user }}
+      ExecStart=/usr/local/bin/mysqld_exporter --config.my-cnf=/ect/.mysqld_exporter.cnf --web.listen-address=0.0.0.0:9104
+      Restart=always
+
+      [Install]
+      WantedBy=multi-user.target
+    mode: "0644"
+
+- name: Reload systemd and start mysqld_exporter
+  ansible.builtin.systemd:
+  daemon_reload: yes
+  name: mysqld_exporter
+  enabled: yes
+  state: started
+...
