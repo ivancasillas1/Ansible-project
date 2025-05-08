@@ -1,4 +1,4 @@
 ---
 # tasks/main.yml
-- include_tasks: "prometheus-{{ ansible_or_family }}.yaml"
+- include_tasks: "prometheus-{{ ansible_os_family }}.yaml"
 ...
