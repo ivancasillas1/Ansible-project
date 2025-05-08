@@ -4,8 +4,20 @@
 # URL de la clave GPG para Docker
 gitdocker: "https://download.docker.com/linux/debian/gpg"
 
+# GPG key URL for Docker (CentOS-compatible)
+gitdocker-redhat: "https://download.docker.com/linux/centos/gpg"
+
 # Repositorio de Docker para Debian Buster
 repodocker: "deb [arch=amd64] https://download.docker.com/linux/debian bookworm stable"
+
+# Docker YUM repository content for CentOS 7/8/Stream/RHEL-based systems
+repodocker-redhat: |
+  [docker-ce-stable]
+  name=Docker CE Stable - $basearch
+  baseurl=https://download.docker.com/linux/centos/7/$basearch/stable
+  enabled=1
+  gpgcheck=1
+  gpgkey=https://download.docker.com/linux/centos/gpg
 
 # URL del archivo ZIP de AWX
 awx: "https://github.com/ansible/awx/archive/17.1.0.zip"
