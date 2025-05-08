@@ -1,3 +1,4 @@
 ---
 # tasks file for apache
-- include_tasks: apache.yaml
+- include_tasks: "apache-{{ ansible_os_family }}.yaml"
+...
