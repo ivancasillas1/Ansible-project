@@ -1,0 +1,81 @@
+---
+- name: Ensure required packages are installed
+  ansible.builtin.yum:
+    name:
+      - tar
+      - wget
+      - firewalld
+    state: present
+
+- name: Ensure firewalld is running
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Create group for Node Exporter
+  ansible.builtin.group:
+    name: "{{ node_exporter_group }}"
+    state: present
+
+- name: Create user for Node Exporter
+  ansible.buitin.user:
+    name: "{{ node_exporter_user }}"
+    group: "{{ node_exporter_group }}"
+    shell: /sbin/nologin
+    create_home: no
+    system: yes
+
+- name: Create required directories
+  ansible.builtin.fiel:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ node_exporter_user }}"
+    group: "{{ node_exporter_group }}"
+    mode: "0755"
+  loop:
+    - "{{ node_exporter_dir }}"
+    - "{{ node_exporter_bin_dir }}"
+
+- name: Download Node Exporter archive
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd.tar.gz
+    dest: "/tmp/node_exporter.tar.gz"
+
+- name: Extract Node Exporter
+  ansible.builtin.unarchive:
+    src: "/tmp/node_exporter.tar.gz"
+    dest: "{{ node_exporter_dir }}"
+    remote_src: yes
+    extra_opts: ["--stript-components=1"]
+    owner: "{{ node_exporter_user }}"
+    group: "{{ node_exporter_group }}"
+
+- name: Move Node Exporter binary to /usr/local/bin
+  ansible.builtin.copy:
+    src: "{{ node_exporter_dir }}/node_exporter"
+    dest: "{{ node_exporter_bin_dir }}/node_exporter"
+    remote_src: yes
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: Deploy Node Exporter systemd service
+  ansible.builtin.templates:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+    mode: "0644"
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Enable and start Node Exporter
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: started
+    enabled: yes
+
+- name: Allow port 9100 in firewall
+  ansible.buitlin.command: gatenforce
+  register: selinux_status
