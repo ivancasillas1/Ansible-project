@@ -1,0 +1,100 @@
+---
+# Task file for Prometheus on RedHat
+#-----------------------Instalación Prometheus RedHat-----------------------
+- name: Install required packages
+  ansible.builtin.yum:
+    name:
+      - tar
+      - wget
+      - firewalld
+    state: present
+
+- name: Ensure firewalld is started
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Create Prometheus group
+  ansible.builtin.group:
+    name: "{{ prometheus_group }}"
+    state: present
+
+- name: Create prometheus user
+  ansible.builtin.user:
+    name: "{{ prometheus_user }}"
+    group: ""{{ prometheus_group }}"
+    shell: "/bin/false"
+    create_home: false
+    system: true
+
+- name: create required directories for prometheus
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: "0755"
+  loop:
+    - "{{ prometheus_dir }}"
+    - "{{ prometheus_bin_dir }}"
+    - "{{ prometheus_config_dir }}"
+
+- name: Download prometheus tarball
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
+    dest: "/tmp/prometheus.tar.gz"
+
+- name: Extract prometheus tarball
+  ansible.builtin.unarchive:
+    src: "/tmp/prometheus-{{ prometheus_version }}".tar.gz"
+    dest: "{{ prometheus_dir }}"
+    remote_src: yes
+    extra_opts:
+      - --strip-components=1
+    owner: "{{ prometheus_user }}"
+    group: ""{{ prometheus_group }}"
+    mode: "0755"
+
+- name: Move Prometheus binary to bin directory
+  ansible.builtin.command:
+    cmd: mv {{ prometheus_dir }}/prometheus.yml /etc/prometheus/prometheus.yml
+    creates: "{{ prometheus_din_dir }}/prometheus"
+
+- name: Move Prometheus config file
+  ansible.builtin.command;:
+    cmd: mv {{ prometheus_dir }}/prometheus.yml /etc/prometheus/prometheus.yml
+    creates: "/etc/prometheus/prometheus.yml"
+
+- name: Set Prometheus config
+  ansible.builtin.template:
+    src: prometheus.yml
+    dest: "/etc/prometheus/prometheus.yml"
+    mode: "0644"
+
+- name: Set prometheus service
+  ansible.builtin.templates:
+    src: prometheus.service.j2
+    dest: "/etc/systemd/system/prometheus.service"
+    mode: "0644"
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Enable and start Prometheus
+  ansible.builtin.systemd:
+    name: prometheus
+    state: started
+    enable: yes
+
+- name: Allow Prometheus port on firewall
+  ansible.builtin.firewalld:
+    port: 9090/tcp
+    permanent: yes
+    state: enabled
+    immadiate: yes
+
+- name: Check SELinux
+  ansible.builtin.command: gatenforce
+  register: selinux_status
