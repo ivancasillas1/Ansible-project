@@ -1,4 +1,5 @@
 ---
 # tasks file for logstash
 - name: install and configure Elasticsearch
-  include_tasks: logstash-mysql.yaml
+  include_tasks: "logstash-mysql-{{ ansible_os_family }}.yaml"
+...
