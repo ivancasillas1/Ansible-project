@@ -1,7 +1,7 @@
 ---
 # tasks file for elastic
 - name: install and configure Elasticsearch
-  include_tasks: elasticsearch.yaml
+  include_tasks: "elasticsearch-{{ ansible_os_family }}.yaml"
 
 - name: Install and configure kibana
-  include_tasks: Kibana.yaml
+  include_tasks: "Kibana-{{ ansible_os_family }}.yaml"
