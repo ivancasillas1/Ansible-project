@@ -1,0 +1,76 @@
+---
+# tasks file for Kibana installation on CentOS
+
+- name: Install firewalld
+  dnf:
+    name: firewalld
+    state: present
+
+- name: Ensure firewalld is running and enabled
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Open kibana port 5601/tcp in firewalld
+  firewalld:
+    port: 5601/tcp
+    permanent: true
+    state: enabled
+    immediate: yes
+
+- name: Reload firewalld to apply changes
+  firewalld:
+    state: reloaded
+
+- name: Install kibana
+  dnf:
+    name: kibana
+    state: present
+    update_cache: yes
+
+- name: Set kibana config file
+  template:
+    src: kibana.yml
+    dest: /etc/kibana/kibana.yml
+    owner: root
+    group: kibana
+    mode: '0664'
+
+- name: wait for kibana to fully start (initial delay)
+  pause:
+    second: 180
+
+- name: Generate Elasticsearch enrollment token for kibana
+  command: /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana
+  register: elasticsearch_token
+
+- name: Show generated kibana token
+  debug:
+    msg: "Generated kibana token: {{ elasticsearch_token.stdout }}"
+
+- name: Enable and start Kibana
+  service:
+    name: kibana
+    enabled: yes
+    state: started
+
+- name: wait for kibana to be fully running
+  pause:
+    seconds: 180
+
+- name: show kibana verification code
+  command: /usr/share/kibana/bin/kibana-verification-code
+  register: kibana_verif_code
+
+- name: show kibana verification code
+  debug:
+    msg: "Generated verification code: {{ kibana_verif_code.stdout }}"
+
+- name: Reset Elsticsearch password
+  command: /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic --batch --silent
+  register: elastic_password_reset
+
+- name: Show new elstic user password
+  debug:
+    msg: "New Elastic password: {{ elastic_password_reset.stdout }}"
