@@ -1,0 +1,47 @@
+---
+- name: Install required packages
+  dnf:
+    name:
+      - curl
+      - gnupg2
+      - ca-certificates
+    state: present
+    update_cache: yes
+
+- name: Add Elasticsearh GPG Key
+  rpm_key:
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Add Elasticsearch repository
+  copy:
+    dest: /etc/yum.repos.d/elasticsearch.repo
+    content: |
+      [elasticsearch]
+      name=Elasticsearch repository
+      baseurl=https://artifacts.elastic.co/packages/{{ elasticsearch_version }}/yum
+      gpgcheck=1
+      gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      enabled=1
+      autorefresh=1
+      type=rpm-md
+
+- name: Install Elasticsearch
+  dnf:
+    name: elasticsearch
+    state: present
+    update_cache: yes
+
+- name: Set Elasticsearch config file
+  template:
+    src: elasticsearch.yml
+    dest: /etc/elasticsearch/elasticsearch.yml
+    owner: root
+    group: elasticsearch
+    mode: '0644'
+
+- name: Enable and start Elasticsearch
+  service:
+    name: elasticsearch
+    enabled: yes
+    state: started
