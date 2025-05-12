@@ -27,7 +27,7 @@
     system: yes
 
 - name: Create required directories
-  ansible.builtin.fiel:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ node_exporter_user }}"
