@@ -62,7 +62,7 @@
     creates: "{{ prometheus_din_dir }}/prometheus"
 
 - name: Move Prometheus config file
-  ansible.builtin.command;:
+  ansible.builtin.command:
     cmd: mv {{ prometheus_dir }}/prometheus.yml /etc/prometheus/prometheus.yml
     creates: "/etc/prometheus/prometheus.yml"
 
