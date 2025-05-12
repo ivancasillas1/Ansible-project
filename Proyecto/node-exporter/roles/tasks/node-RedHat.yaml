@@ -77,7 +77,7 @@
     enabled: yes
 
 - name: Allow port 9100 in firewall
-  ansible.buitlin.firewalld:
+  ansible.builtin.firewalld:
     port: 9100/tcp
     permanent: yes
     state: enabled
