@@ -58,7 +58,7 @@
 # Import MariaDB config
 - name: Set up configuration
   copy:
-    src: mariadb-server.cnf.j2
+    src: mariadb-server.cnf
     dest: "{{ RedHat }}"
     owner: root
     group: root
