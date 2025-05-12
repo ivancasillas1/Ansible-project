@@ -23,7 +23,7 @@
 - name: Create prometheus user
   ansible.builtin.user:
     name: "{{ prometheus_user }}"
-    group: ""{{ prometheus_group }}"
+    group: "{{ prometheus_group }}"
     shell: "/bin/false"
     create_home: false
     system: true
