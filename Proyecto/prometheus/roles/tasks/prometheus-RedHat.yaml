@@ -47,13 +47,13 @@
 
 - name: Extract prometheus tarball
   ansible.builtin.unarchive:
-    src: "/tmp/prometheus-{{ prometheus_version }}".tar.gz"
+    src: "/tmp/prometheus-{{ prometheus_version }}.tar.gz"
     dest: "{{ prometheus_dir }}"
     remote_src: yes
     extra_opts:
       - --strip-components=1
     owner: "{{ prometheus_user }}"
-    group: ""{{ prometheus_group }}"
+    group: "{{ prometheus_group }}"
     mode: "0755"
 
 - name: Move Prometheus binary to bin directory
