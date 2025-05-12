@@ -36,8 +36,8 @@
 
 - name: Create MySQL exporter user with privileges
   mysql_user:
-    name: "{{ exporter_mysql_user }}"
-    password: "{{ exporter_mysql_password }}"
+    name: exporter
+    password: Ivancasillas36
     priv: "*.*:PROCESS,REPLICATION CLIENT"
     host: "%"
     state: present
