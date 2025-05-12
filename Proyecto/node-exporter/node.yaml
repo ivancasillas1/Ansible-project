@@ -5,7 +5,7 @@
   become_method: sudo
   ignore_unreachable: yes
   roles:
-    - roles
+    #- roles
     - mysql
 
 - name: Node-exporter installation
