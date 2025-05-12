@@ -47,7 +47,7 @@
 
 - name: Extract prometheus tarball
   ansible.builtin.unarchive:
-    src: "/tmp/prometheus-{{ prometheus_version }}.tar.gz"
+    src: "/tmp/prometheus.tar.gz"
     dest: "{{ prometheus_dir }}"
     remote_src: yes
     extra_opts:
