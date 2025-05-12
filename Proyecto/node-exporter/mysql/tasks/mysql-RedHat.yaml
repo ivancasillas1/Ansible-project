@@ -34,7 +34,7 @@
     create_home: no
 
 - name: Create MySQL exporter user with privileges
-  community.mysql.mysql_user:
+  mysql_user:
     name: "{{ exporter_mysql_user }}"
     password: "{{ exporter_mysql_password }}"
     priv: "*.*:PROCESS,REPLICATION CLIENT"
