@@ -38,7 +38,7 @@
   loop:
     - "{{ prometheus_dir }}"
     - "{{ prometheus_bin_dir }}"
-    - "{{ prometheus_config_dir }}"
+    - "/etc/prometheus"
 
 - name: Download prometheus tarball
   ansible.builtin.get_url:
