@@ -35,7 +35,7 @@
     mode: "0755"
   loop:
     - "{{ node_exporter_dir }}"
-    - "{{ node_exporter_bin_dir }}"
+    - "{{ prometheus_bin_dir }}"
 
 - name: Download Node Exporter archive
   ansible.builtin.get_url:
