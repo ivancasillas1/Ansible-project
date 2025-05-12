@@ -105,6 +105,7 @@
 
 #Open SSH port (22)
 - name: Open port 22 in firewall
+  firewalld:
     port: 22/tcp
     permanent: true
     state: enabled
