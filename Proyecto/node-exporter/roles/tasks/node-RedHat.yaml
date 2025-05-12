@@ -19,7 +19,7 @@
     state: present
 
 - name: Create user for Node Exporter
-  ansible.buitin.user:
+  ansible.builtin.user:
     name: "{{ node_exporter_user }}"
     group: "{{ node_exporter_group }}"
     shell: /sbin/nologin
