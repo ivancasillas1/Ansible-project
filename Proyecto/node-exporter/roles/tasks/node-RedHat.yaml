@@ -77,5 +77,8 @@
     enabled: yes
 
 - name: Allow port 9100 in firewall
-  ansible.buitlin.command: gatenforce
-  register: selinux_status
+  ansible.buitlin.firewalld:
+    port: 9100/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
