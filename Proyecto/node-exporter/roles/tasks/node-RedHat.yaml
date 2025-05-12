@@ -3,6 +3,7 @@
   ansible.builtin.yum:
     name:
       - tar
+      - unxip
       - wget
       - firewalld
     state: present
