@@ -55,7 +55,7 @@
 - name: Move Node Exporter binary to /usr/local/bin
   ansible.builtin.copy:
     src: "{{ node_exporter_dir }}/node_exporter"
-    dest: "{{ node_exporter_bin_dir }}/node_exporter"
+    dest: "{{ prometheus_bin_dir }}/node_exporter"
     remote_src: yes
     mode: "0755"
     owner: root
