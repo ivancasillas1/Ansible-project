@@ -4,6 +4,7 @@
     name:
       - firewalld
       - tar
+      - unzip
       - wget
     state: present
 
@@ -30,7 +31,7 @@
     name: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
     system: yes
-    shell: (sbin7nologin
+    shell: /sbin/nologin
     create_home: no
 
 - name: Create MySQL exporter user with privileges
