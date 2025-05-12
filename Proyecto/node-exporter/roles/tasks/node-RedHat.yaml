@@ -61,7 +61,7 @@
     group: root
 
 - name: Deploy Node Exporter systemd service
-  ansible.builtin.templates:
+  ansible.builtin.template:
     src: node_exporter.service.j2
     dest: /etc/systemd/system/node_exporter.service
     mode: "0644"
