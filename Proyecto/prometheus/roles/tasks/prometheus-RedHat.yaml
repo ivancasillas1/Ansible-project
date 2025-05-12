@@ -59,7 +59,7 @@
 - name: Move Prometheus binary to bin directory
   ansible.builtin.command:
     cmd: mv {{ prometheus_dir }}/prometheus.yml /etc/prometheus/prometheus.yml
-    creates: "{{ prometheus_din_dir }}/prometheus"
+    creates: "{{ prometheus_bin_dir }}/prometheus"
 
 - name: Move Prometheus config file
   ansible.builtin.command:
