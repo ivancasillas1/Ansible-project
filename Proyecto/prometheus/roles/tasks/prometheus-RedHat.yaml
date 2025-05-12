@@ -86,7 +86,7 @@
   ansible.builtin.systemd:
     name: prometheus
     state: started
-    enable: yes
+    enabled: yes
 
 - name: Allow Prometheus port on firewall
   ansible.builtin.firewalld:
