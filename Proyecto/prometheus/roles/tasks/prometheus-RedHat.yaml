@@ -94,7 +94,3 @@
     permanent: yes
     state: enabled
     immediate: yes
-
-- name: Check SELinux
-  ansible.builtin.command: gatenforce
-  register: selinux_status
