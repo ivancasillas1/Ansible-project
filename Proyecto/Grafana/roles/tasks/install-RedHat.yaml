@@ -18,6 +18,14 @@
     name: grafana
     state: present
 
+- name: Allow Grafana port through firewall
+  firewalld:
+    port: 3000/tcp
+    permanent: yes
+    state: enabled
+    immediate: yes
+
+
 - name: Enable and start grafana service
   systemd:
     name: grafana-server
