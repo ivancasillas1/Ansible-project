@@ -48,8 +48,8 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    owner: "{{ node_exporter_user }}"
-    group: "{{ node_exporter_group }}"
+    owner: "{{ mysql_exporter_user }}"
+    group: "{{ mysql_exporter_group }}"
     mode: "0755"
   loop:
     - "{{ mysql_exporter_dir }}"
