@@ -46,7 +46,7 @@
 
 - name: Create required directories for Node Exporter
   ansible.builtin.file:
-  path: "{{ item }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ node_exporter_user }}"
     group: "{{ node_exporter_group }}"
