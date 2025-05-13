@@ -17,4 +17,10 @@
   dnf:
     name: grafana
     state: present
+
+- name: Enable and start grafana service
+  systemd:
+    name: grafana-server
+    state: started
+    enabled: yes
 ...
