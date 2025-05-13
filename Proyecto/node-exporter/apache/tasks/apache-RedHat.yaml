@@ -73,6 +73,7 @@
 
 - name: Reload systemd and start Apache Exporter
   ansible.builtin.systemd:
+    name: apache_exporter
     daemon_reload: yes
     enabled: yes
     state: started
