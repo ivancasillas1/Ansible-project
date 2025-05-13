@@ -40,7 +40,7 @@
 
 - name: wait for kibana to fully start (initial delay)
   pause:
-    second: 180
+    seconds: 180
 
 - name: Generate Elasticsearch enrollment token for kibana
   command: /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana
