@@ -20,7 +20,8 @@
     immediate: yes
 
 - name: Reload firewalld to apply changes
-  firewalld:
+  systemd:
+    name: firewalld
     state: reloaded
 
 - name: Install kibana
