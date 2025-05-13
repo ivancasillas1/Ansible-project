@@ -1,12 +1,12 @@
 ---
-#- name: Node-exporter installation
-#  hosts: mariadb
-#  become: yes
-#  become_method: sudo
-#  ignore_unreachable: yes
-#  roles:
-    #- roles
-    #- mysql
+- name: Node-exporter installation
+  hosts: mariadb
+  become: yes
+  become_method: sudo
+  ignore_unreachable: yes
+  roles:
+    - roles
+    - mysql
 
 - name: Node-exporter installation
   hosts: wordpress
