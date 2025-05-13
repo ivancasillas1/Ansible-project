@@ -53,11 +53,11 @@
 - name: Extract Node Exporter
   ansible.builtin.unarchive:
     src: "/tmp/mysqld_exporter.tar.gz"
-    dest: "{{ node_exporter_dir }}"
+    dest: "{{ mysql_exporter_dir }}"
     remote_src: yes
     extra_opts: ["--strip-components=1"]
-    owner: "{{ node_exporter_user }}"
-    group: "{{ node_exporter_group }}"
+    owner: "{{ mysql_exporter_user }}"
+    group: "{{ mysql_exporter_group }}"
 
 - name: Set permissions for mysqld_exporter binary
   ansible.builtin.file:
