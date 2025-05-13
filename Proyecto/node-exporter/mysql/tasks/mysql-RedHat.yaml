@@ -78,9 +78,9 @@
     dest: "/etc/.mysqld_exporter.cnf"
     content: |
       [client]
-      user:{{ exporter_mysql_user }}
-      password={{ exporter_mysql_password }}
-      host={{ mysql_host }}
+      user:exporter
+      password=Ivancasillas36
+      host=172.26.203.192
     owner: "{{ prometheus_user }}"
     group: "{{ prometheus_group }}"
     mode: "0600"
