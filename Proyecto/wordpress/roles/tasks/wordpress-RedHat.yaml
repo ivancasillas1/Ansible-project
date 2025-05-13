@@ -70,12 +70,6 @@
     group: root
     mode: '0644'
 
-# Restart Nginx Web Server
-- name: Restart HTTPD service
-  service:
-    name: httpd
-    state: restarted
-
 # Disable SELinux module
 - name: Disable SELinux module
   copy:
@@ -84,6 +78,12 @@
     owner: root
     group: root
     mode: '0644'
+
+# Restart Nginx Web Server
+- name: Restart HTTPD service
+  service:
+    name: httpd
+    state: restarted
 
 # Restart server
 - name: Restart remote server
