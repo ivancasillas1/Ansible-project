@@ -6,3 +6,4 @@ html: /var/www/html
 tmp: /tmp/wordpress.tar.gz
 wordpress: https://wordpress.org/latest.tar.gz
 selinux: /etc/selinux/config
+httpd: /etc/httpd/conf/httpd.conf
