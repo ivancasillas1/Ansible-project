@@ -68,9 +68,9 @@
       WantedBy=multi-usre.target
     mode: "0644"
 
-  - name: Reload systemd and start Apache Exporter
-    ansible.builtin.systemd:
-      daemon_reload: yes
-      enabled: yes
-      state: started
+- name: Reload systemd and start Apache Exporter
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
 ...
