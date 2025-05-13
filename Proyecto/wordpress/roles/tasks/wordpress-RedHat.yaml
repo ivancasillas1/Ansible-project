@@ -3,7 +3,7 @@
 #-----------------------Instalación Wordpress RedHat-----------------------
 # Update package cache
 - name: Update package cache
- yum:
+  yum:
     name: '*'
     state: latest
     update_cache: true
@@ -48,8 +48,8 @@
   src: "{{ wordpress }}"
   dest: "{{ html }"
   remote_src: yes
-  owner: nginx
-  group: nginx
+  owner: httpd
+  group: httpd
   mode: '0755'
 
 #Set up Wordpress config
