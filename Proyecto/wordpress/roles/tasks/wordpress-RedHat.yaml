@@ -65,7 +65,7 @@
 - name: Import worpress config to nginx
   copy:
     src: wordpress.conf.j2
-    dest: "{{ proxy }}"
+    dest: "{{ httpd }}"
     owner: root
     group: root
     mode: '0644'
