@@ -47,7 +47,7 @@
 
 - name: Download MySQL Exporter
   ansible.builtin.get_url:
-    url: "https://github.com/prometheus/mysqld_exporter/releases/download/v{{ mysql_exporter_version }}/mysqld_exporter-{{ mysql_exporter_version }}.linux-amd.tar.gz"
+    url: "https://github.com/prometheus/mysqld_exporter/releases/download/v{{ mysql_exporter_version }}/mysqld_exporter-{{ mysql_exporter_version }}.linux-amd64.tar.gz"
     dest: "/tmp/mysqld_exporter.tar.gz"
 
 - name: Extract MySQL Exporter
