@@ -3,3 +3,6 @@
 mysql_exporter_version: "0.17.2"
 prometheus_user: "prometheus"
 prometheus_group: "prometheus"
+
+mysql_exporter_dir: "/opt/mysql_exporter"
+mysql_exporter_bin_dir: "/usr/local/bin"
