@@ -48,8 +48,8 @@
     src: "{{ wordpress }}"
     dest: "{{ html }}"
     remote_src: yes
-    owner: httpd
-    group: httpd
+    owner: apache
+    group: apache
     mode: '0755'
 
 #Set up Wordpress config
@@ -71,9 +71,9 @@
     mode: '0644'
 
 # Restart Nginx Web Server
-- name: Restart nginx service
+- name: Restart HTTPD service
   service:
-    name: nginx
+    name: httpd
     state: restarted
 
 # Disable SELinux module
