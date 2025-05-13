@@ -46,7 +46,7 @@
 - name: Copy Wordpress files
   unarchive:
     src: "{{ wordpress }}"
-    dest: "{{ html }"
+    dest: "{{ html }}"
     remote_src: yes
     owner: httpd
     group: httpd
