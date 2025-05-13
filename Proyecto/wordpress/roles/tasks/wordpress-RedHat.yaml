@@ -64,7 +64,7 @@
 # import Wordpress config to nginx
 - name: Import worpress config to nginx
   copy:
-    src: wordpress.conf.j2
+    src: httpd_conf_file
     dest: "{{ httpd }}"
     owner: root
     group: root
