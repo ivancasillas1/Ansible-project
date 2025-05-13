@@ -31,59 +31,59 @@
       autorefresh=1
       type=rpm-md
 
-  - name: install Logstash
-    dnf:
-      name: logstash
-      state: present
+- name: install Logstash
+  dnf:
+    name: logstash
+    state: present
+    
+- name: Start and enable Logstash
+  service:
+    name: logstash
+    enabled: yes
+    state: started
 
-  - name: Start and enable Logstash
-    service:
-      name: logstash
-      enabled: yes
-      state: started
+- name: Create apache.conf file for Logstash
+  template:
+    src: apache.conf
+    dest: /etc/logsatsh/conf.d7apache.conf
+    owner: root
+    group: root
+    mode: '0644'
 
-  - name: Create apache.conf file for Logstash
-    template:
-      src: apache.conf
-      dest: /etc/logsatsh/conf.d7apache.conf
-      owner: root
-      group: root
-      mode: '0644'
+- name: Create error.conf file for Logstash
+  template:
+    src: errorapache.conf
+    dest: /etc/logstasgh/conf.d
+    owner: root
+    group: root
+    mode: '0644'
 
-  - name: Create error.conf file for Logstash
-    template:
-      src: errorapache.conf
-      dest: /etc/logstasgh/conf.d
-      owner: root
-      group: root
-      mode: '0644'
+- name: Ensure logsatsh user is in wheel group # equivalent to adm in debian
+  user:
+    name: logsatsh
+    group: wheel
+    append: yes
 
-  - name: Ensure logsatsh user is in wheel group # equivalent to adm in debian
-    user:
-      name: logsatsh
-      group: wheel
-      append: yes
+- name: Set permissions on Apache access log file
+  file:
+    path: /var/log/httpd/access.log
+    owner: root
+    group: wheel
+    mode: '0644'
 
-  - name: Set permissions on Apache access log file
-    file:
-      path: /var/log/httpd/access.log
-      owner: root
-      group: wheel
-      mode: '0644'
+- name: Set permissions on Apache error log file
+  file:
+    path: /var/log/httpd/error.log
+    owner: root
+    group: wheel
+    mode: '0644'
 
-  - name: Set permissions on Apache error log file
-    file:
-      path: /var/log/httpd/error.log
-      owner: root
-      group: wheel
-      mode: '0644'
-
-  - name: Set permissions to apache log directory
-    file:
-      path: /var/log/httpd/
-      owner: root
-      group: wheel
-      mode: '0644'
+- name: Set permissions to apache log directory
+  file:
+    path: /var/log/httpd/
+    owner: root
+    group: wheel
+    mode: '0644'
 
 - name: Restart Logstash
   service:
