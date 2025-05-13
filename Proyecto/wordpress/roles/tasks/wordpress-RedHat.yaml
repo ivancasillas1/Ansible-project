@@ -45,12 +45,12 @@
 # Copy Wordpress files for installation
 - name: Copy Wordpress files
   unarchive:
-  src: "{{ wordpress }}"
-  dest: "{{ html }"
-  remote_src: yes
-  owner: httpd
-  group: httpd
-  mode: '0755'
+    src: "{{ wordpress }}"
+    dest: "{{ html }"
+    remote_src: yes
+    owner: httpd
+    group: httpd
+    mode: '0755'
 
 #Set up Wordpress config
 - name: Set up Wordpress config
