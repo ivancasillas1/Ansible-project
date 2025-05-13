@@ -3,13 +3,13 @@
 #-----------------------Instalación Apache2 RedHat-----------------------
 - name: Apache2 installation
   yum:
-    name: apache2
+    name: httpd
     state: latest
 
 # Start apache service
 - name: Start apache service
   service:
-    name: apache2
+    name: httpd
     state: started
 
 # Open ports in the firewall
@@ -40,8 +40,8 @@
     state: reloaded
 
 # Restart nginx
-- name: Restart nginx
+- name: Restart HTTPd
   service:
-    name: nginx
+    name: httpd
     state: restarted
 ...
