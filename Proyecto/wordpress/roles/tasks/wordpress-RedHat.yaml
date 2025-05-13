@@ -56,7 +56,7 @@
 - name: Set up Wordpress config
   copy:
     src: wp-config.php
-    dest: "{{ wp-config }}"
+    dest: "{{ wp }}"
     owner: root
     group: root
     mode: '0644'
