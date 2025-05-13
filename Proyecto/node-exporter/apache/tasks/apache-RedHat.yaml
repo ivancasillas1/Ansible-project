@@ -35,8 +35,8 @@
 
 - name: Download Apache Exporter
   ansible.builtin.get_url:
-    url: "https://github.com/lusitaniae/apache_exporter/releases/download/v{{ apache_exporter_version }}/apache-exporter-{{ apache_exporter_version }}.linux-amd64.tar.gz"
-    dest: /tmp/apaceh_exporter.tar.gz"
+    url: "https://github.com/Lusitaniae/apache_exporter/releases/download/v{{ apache_exporter_version }}/apache-exporter-{{ apache_exporter_version }}.linux-amd64.tar.gz"
+    dest: /tmp/apache_exporter.tar.gz"
 
 - name: Extract Apache exporter
   ansible.builtin.unarchive:
