@@ -9,8 +9,8 @@
     update_cache: true
 
 # install required packages
- - name: Install required packages
-   yum:
+- name: Install required packages
+  yum:
     name:
       - php
       - nginx
@@ -19,7 +19,7 @@
       - php-mysqlnd
       - php-zip
       - php-devel
-      - pgp-gd
+      - php-gd
       - php-mcrypt
       - php-mbstring
       - php-curl
