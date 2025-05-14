@@ -21,11 +21,11 @@
     name: ansible
     state: present
 
-- name: Download Docker Compose v1.29.2
-  get_url:
-    url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
-    dest: /usr/local/bin/docker-compose
-    mode: '0755'
+- name: Install Python docker-compose module
+  become: true
+  pip:
+    name: docker-compose
+    executable: pip3
 
 - name: Add Docker GPG KEy
   shell: "curl -fsSL {{ gitdocker_redhat }}"
