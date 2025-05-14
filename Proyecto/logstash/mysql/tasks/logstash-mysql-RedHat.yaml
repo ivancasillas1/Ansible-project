@@ -49,7 +49,7 @@
 - name: Create mysql log directory
   file:
     path: /var/log/mysql
-    state: directoty
+    state: directory
     mode: '2750'
     owner: mysql
     group: mysql
