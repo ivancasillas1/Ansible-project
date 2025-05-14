@@ -46,14 +46,6 @@
     group: root
     mode: '0644'
 
-- name: Create mysql log directory
-  file:
-    path: /var/log/mysql
-    state: directory
-    mode: '2750'
-    owner: mysql
-    group: mysql
-
 - name: Restart MaraiDB
   service:
     name: mariadb
@@ -75,21 +67,21 @@
 
 - name: Set permissions on MariaDB general log file
   file:
-    path: /var/log/mysql/mysql.log
+    path: /var/log/mariadb/general.log
     owner: root
     group: wheel
     mode: '0644'
 
 - name: Set permissions on MariaDB error log file
   file:
-    path: /var/log/mysql/error.log
+    path: /var/log/mysql/maraidb.log
     owner: root
     group: wheel
     mode: '0644'
 
 - name: Set permissions in MariaDB log directory
   file:
-    path: /var/log/mysql
+    path: /var/log/mariadb
     owner: mysql
     group: wheel
     mode: '0755'
