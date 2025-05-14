@@ -13,7 +13,7 @@
       - python3-pip
       - ca-certificates
       - curl
-      - dnf-plugin-core
+      - dnf-plugins-core
     state: present
 
 - name: Install Ansible
@@ -66,19 +66,19 @@
     msg: "Generated AWX secret key: {{ awx_secret_key.stdout }}"
 
 - name: modify awx configuration file (uncomment and update admin_password)
-lineinfile:
-  path: "{{ path }}/inventory"
-  regexp: '^#?(admin_password=.*)'
-  line: 'admin_password={{ adminpass }}'
+  lineinfile:
+    path: "{{ path }}/inventory"
+    regexp: '^#?(admin_password=.*)'
+    line: 'admin_password={{ adminpass }}'
 
 - name: Modify other awe configuration settings
-  lineinfile
+  lineinfile:
     path: "{{ path }}/inventory"
     regexp: "{{ item.regex }}"
     line: "{{ item.line }}"
   loop:
-    - { regex: '^admin_user=.*', line 'admin_user={{ admin {{' }
-    - { regex: '^secret_key=.*', line 'secret_key={{ awx_secret_key.stdout }}' }
+    - { regex: '^admin_user=.*', line: 'admin_user={{ admin }}' }
+    - { regex: '^secret_key=.*', line: 'secret_key={{ awx_secret_key.stdout }}' }
 
 - name: Install AWX using Ansible
   command: ansible-playbook -i {{ path }}/inventory install.yml
