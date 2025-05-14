@@ -1,9 +1,9 @@
-- name: Install logstash
-  hosts: wordpress
-  become: yes
-  become_method: sudo
-  roles:
-    - apache
+#- name: Install logstash
+#  hosts: wordpress
+#  become: yes
+#  become_method: sudo
+#  roles:
+#    - apache
 
 - name: Install Logstash in MariaDB
   hosts: mariadb
