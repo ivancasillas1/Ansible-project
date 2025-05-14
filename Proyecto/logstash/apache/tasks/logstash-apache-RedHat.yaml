@@ -24,14 +24,14 @@
     content: |
       [elastic-8-x]
       name=Elastic repository for 8.x packages
-      baseurl1=htpps://artifacts.elastic.co/packages/8.x/yum
+      baseurl=https://artifacts.elastic.co/packages/8.x/yum
       gpgcheck=1
-      gpgkey=htpps://artifacts.elastic.co/GPG-KEY-elasticsearch
+      gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
       enabled=1
       autorefresh=1
       type=rpm-md
 
-- name: install Logstash
+- name: Install Logstash
   dnf:
     name: logstash
     state: present
