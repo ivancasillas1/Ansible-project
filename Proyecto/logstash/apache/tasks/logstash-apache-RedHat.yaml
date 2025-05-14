@@ -1,6 +1,6 @@
 - name: Install neccesary dependencies
   dnf: 
-    name: dnf-plugin-core
+    name: dnf-plugins-core
     state: present
   when: ansible_os_family == "RedHat"
 
