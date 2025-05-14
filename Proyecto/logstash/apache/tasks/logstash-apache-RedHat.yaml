@@ -45,7 +45,7 @@
 - name: Create apache.conf file for Logstash
   template:
     src: apache.conf
-    dest: /etc/logsatsh/conf.d7apache.conf
+    dest: /etc/logstash/conf.d/apache.conf
     owner: root
     group: root
     mode: '0644'
@@ -53,14 +53,14 @@
 - name: Create error.conf file for Logstash
   template:
     src: errorapache.conf
-    dest: /etc/logstasgh/conf.d
+    dest: /etc/logstash/conf.d
     owner: root
     group: root
     mode: '0644'
 
 - name: Ensure logsatsh user is in wheel group # equivalent to adm in debian
   user:
-    name: logsatsh
+    name: logstash
     group: wheel
     append: yes
 
