@@ -21,21 +21,26 @@
     name: ansible
     state: present
 
+- name: Download Docker Compose v1.29.2
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+
 - name: Add Docker GPG KEy
-  shell: "curl -fsSL {{ gitdocker-RedHat }} | gppg -dearmor -o /etc/pki/rpm-gpg/docker.gpg"
+  shell: "curl -fsSL {{ gitdocker_redhat }}"
   args:
     creates: /etc/pki/rpm-gpg/docker.gpg
 
 - name: Add Docker repository
   copy:
     dest: /etc/yum.repos.d/docker-ce.repo
-    content: "{{ repodocker-RedHat }}"
+    content: "{{ repodocker_redhat }}"
 
-- name: Install Docker and Docker Compose
+- name: Install Docker
   dnf:
     name:
       - docker-ce
-      - docker-compose
       - docker-ce-cli
       - containerd.io
     state: present
