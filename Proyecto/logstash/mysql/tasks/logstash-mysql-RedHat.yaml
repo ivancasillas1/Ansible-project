@@ -31,37 +31,37 @@
       autorefresh=1
       type=rpm-md
 
-  - name: Install Logstash
-    dnf:
-      name: logstash
-      state: present
+- name: Install Logstash
+  dnf:
+    name: logstash
+    state: present
 
-  - name: Start and enable Logstash
-    service:
-      name: logstash
-      enabled: yes
-      state: started
+- name: Start and enable Logstash
+  service:
+    name: logstash
+    enabled: yes
+    state: started
 
-  - name: Create mariadb.conf
-    template:
-      src: mysql.conf
-      dest: /etc/logstash/conf.d/mysql.conf
-      owner: root
-      group: root
-      mode: '0644'
+- name: Create mariadb.conf
+  template:
+    src: mysql.conf
+    dest: /etc/logstash/conf.d/mysql.conf
+    owner: root
+    group: root
+    mode: '0644'
 
-  - name: Create mysql log directory
-    file:
-      path: /var/log/mysql
-      state: directoty
-      mode: '2750'
-      owner: mysql
-      group: mysql
+- name: Create mysql log directory
+  file:
+    path: /var/log/mysql
+    state: directoty
+    mode: '2750'
+    owner: mysql
+    group: mysql
 
-  - name: Restart MaraiDB
-    service:
-      name: mariadb
-      state: restarted
+- name: Restart MaraiDB
+  service:
+    name: mariadb
+    state: restarted
 
 - name: Create error.conf
   template:
