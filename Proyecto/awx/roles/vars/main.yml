@@ -5,13 +5,13 @@
 gitdocker: "https://download.docker.com/linux/debian/gpg"
 
 # GPG key URL for Docker (CentOS-compatible)
-gitdocker-redhat: "https://download.docker.com/linux/centos/gpg"
+gitdocker_redhat: "https://download.docker.com/linux/centos/gpg"
 
 # Repositorio de Docker para Debian Buster
 repodocker: "deb [arch=amd64] https://download.docker.com/linux/debian bookworm stable"
 
 # Docker YUM repository content for CentOS 9/Stream/RHEL-based systems
-repodocker-redhat: |
+repodocker_redhat: |
   [docker-ce-stable]
   name=Docker CE Stable - $basearch
   baseurl=https://download.docker.com/linux/centos/9/$basearch/stable
