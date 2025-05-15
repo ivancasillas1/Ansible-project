@@ -21,9 +21,14 @@
     name: ansible
     state: present
 
-- name: Install Python Docker SDK
+- name: Install Python Docker SDK (compatible version)
   pip:
-    name: docker
+    name: docker==5.0.3
+    executable: pip3
+
+- name: Install docker-compose (v1 via pip)
+  pip:
+    name: docker-compose==1.29.2
     executable: pip3
 
 - name: Install docker-compose (v1 via pip)
