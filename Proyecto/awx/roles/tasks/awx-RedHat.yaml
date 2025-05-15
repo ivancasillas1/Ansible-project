@@ -1,4 +1,4 @@
-- name: Update packages
+- name: Update all system packages
   dnf:
     name: "*"
     state: latest
@@ -21,14 +21,18 @@
     name: ansible
     state: present
 
-- name: Install Python docker-compose module
-  become: true
+- name: Install Python Docker SDK
+  pip:
+    name: docker
+    executable: pip3
+
+- name: Install docker-compose (v1 via pip)
   pip:
     name: docker-compose
     executable: pip3
 
-- name: Add Docker GPG KEy
-  shell: "curl -fsSL {{ gitdocker_redhat }}"
+- name: Add Docker GPG Key
+  shell: "curl -fsSL {{ gitdocker_redhat }} -o /etc/pki/rpm-gpg/docker.gpg"
   args:
     creates: /etc/pki/rpm-gpg/docker.gpg
 
@@ -62,7 +66,7 @@
     dest: "/tmp"
     remote_src: yes
 
-- name: Generate secret Kay for AWX
+- name: Generate secret key for AWX
   command: pwgen -N 1 -s 40
   register: awx_secret_key
 
@@ -70,13 +74,13 @@
   debug:
     msg: "Generated AWX secret key: {{ awx_secret_key.stdout }}"
 
-- name: modify awx configuration file (uncomment and update admin_password)
+- name: Set admin_password in AWX inventory
   lineinfile:
     path: "{{ path }}/inventory"
     regexp: '^#?(admin_password=.*)'
     line: 'admin_password={{ adminpass }}'
 
-- name: Modify other awe configuration settings
+- name: Update other AWX inventory settings
   lineinfile:
     path: "{{ path }}/inventory"
     regexp: "{{ item.regex }}"
@@ -85,7 +89,16 @@
     - { regex: '^admin_user=.*', line: 'admin_user={{ admin }}' }
     - { regex: '^secret_key=.*', line: 'secret_key={{ awx_secret_key.stdout }}' }
 
-- name: Install AWX using Ansible
+- name: Debug docker-compose path
+  command: which docker-compose
+  register: compose_path
+
+- debug:
+    var: compose_path.stdout
+
+- name: Run AWX installer
   command: ansible-playbook -i {{ path }}/inventory install.yml
   args:
     chdir: "{{ path }}"
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/bin"
