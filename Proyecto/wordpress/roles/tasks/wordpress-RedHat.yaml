@@ -84,9 +84,3 @@
   service:
     name: httpd
     state: restarted
-
-# Restart server
-- name: Restart remote server
-  reboot:
-    reboot_timeout: 60
-    post_reboot_delay: 30
