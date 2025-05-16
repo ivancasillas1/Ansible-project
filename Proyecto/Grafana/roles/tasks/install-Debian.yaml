@@ -3,7 +3,7 @@
 #-----------------------Instalación Grafana Debian-----------------------
 - name: Add Grafana GPG key
   apt_key:
-    url: "{{ grafana_install_gpg_key }}"
+    url: "{{ grafana_debian_key }}"
     state: present
 
 - name: Add Grafana APT repository
