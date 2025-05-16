@@ -1,6 +1,7 @@
 ---
 # vars file for elastic
 grafana_debian_repo: deb https://apt.grafana.com stable main
+grafana_debian_key: https://apt.grafana.com/gpg.key
 grafana_install_repo: https://rpm.grafana.com
 grafana_install_gpg_key: https://rpm.grafana.com/gpg.key
 ...
