@@ -8,7 +8,7 @@
 
 - name: Add Grafana APT repository
   apt_repository:
-    repo: "{{ grafana_install_repo }}"
+    repo: "{{ grafana_debian_repo }}"
     state: present
     filename: grafana
     update_cache: yes
