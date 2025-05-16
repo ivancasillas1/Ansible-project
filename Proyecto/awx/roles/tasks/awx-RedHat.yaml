@@ -31,11 +31,6 @@
     name: docker-compose==1.29.2
     executable: pip3
 
-- name: Install docker-compose (v1 via pip)
-  pip:
-    name: docker-compose
-    executable: pip3
-
 - name: Add Docker GPG Key
   shell: "curl -fsSL {{ gitdocker_redhat }} -o /etc/pki/rpm-gpg/docker.gpg"
   args:
