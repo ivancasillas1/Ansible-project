@@ -26,10 +26,16 @@
     name: docker==5.0.3
     executable: pip3
 
-- name: Install docker-compose (v1 via pip)
+- name: Check if docker compose is available (V2)
+  command: docker compose version
+  register: docker_compose_v2
+  ignore_errors: yes
+
+- name: Install docker-compose v1 via pip (only if V2 is not available)
   pip:
     name: docker-compose==1.29.2
     executable: pip3
+  when: docker_compose_v2.rc != 0
 
 - name: Add Docker GPG Key
   shell: "curl -fsSL {{ gitdocker_redhat }} -o /etc/pki/rpm-gpg/docker.gpg"
@@ -89,12 +95,15 @@
     - { regex: '^admin_user=.*', line: 'admin_user={{ admin }}' }
     - { regex: '^secret_key=.*', line: 'secret_key={{ awx_secret_key.stdout }}' }
 
-- name: Debug docker-compose path
+- name: Debug docker-compose path (V1)
   command: which docker-compose
   register: compose_path
+  ignore_errors: yes
 
-- debug:
+- name: Show detected docker-compose (V1) path
+  debug:
     var: compose_path.stdout
+  when: compose_path.rc == 0
 
 - name: Run AWX installer
   command: ansible-playbook -i {{ path }}/inventory install.yml
