@@ -26,15 +26,14 @@
     name: docker==5.0.3
     executable: pip3
 
-- name: Check if docker compose is available (V2)
+- name: Check if docker compose (V2) is available
   command: docker compose version
   register: docker_compose_v2
   ignore_errors: yes
 
-- name: Install docker-compose v1 via pip (only if V2 is not available)
-  pip:
-    name: docker-compose==1.29.2
-    executable: pip3
+- name: Fail if Docker Compose V2 is not installed
+  fail:
+    msg: "Docker Compose V2 is required but not found. Please install Docker Compose V2."
   when: docker_compose_v2.rc != 0
 
 - name: Add Docker GPG Key
@@ -94,16 +93,6 @@
   loop:
     - { regex: '^admin_user=.*', line: 'admin_user={{ admin }}' }
     - { regex: '^secret_key=.*', line: 'secret_key={{ awx_secret_key.stdout }}' }
-
-- name: Debug docker-compose path (V1)
-  command: which docker-compose
-  register: compose_path
-  ignore_errors: yes
-
-- name: Show detected docker-compose (V1) path
-  debug:
-    var: compose_path.stdout
-  when: compose_path.rc == 0
 
 - name: Run AWX installer
   command: ansible-playbook -i {{ path }}/inventory install.yml
