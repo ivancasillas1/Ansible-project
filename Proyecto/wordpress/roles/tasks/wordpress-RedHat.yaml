@@ -70,14 +70,16 @@
     group: root
     mode: '0644'
 
-# Disable SELinux module
-- name: Disable SELinux module
-  copy:
-    src: config
-    dest: "{{ selinux }}"
-    owner: root
-    group: root
-    mode: '0644'
+# Diasble SELinux permanently
+- name: Disable SELinux permanently
+  ansible.builtin.replace:
+    path: /etc/selinux/config
+    regexp: '^SELINUX=.*'
+    replace: 'SELINUX=disabled'
+
+- name: Disable SELinux for current session
+  command: setenforce 0
+  when: ansible_selinux.status == "enabled"
 
 # Restart Nginx Web Server
 - name: Restart HTTPD service
