@@ -83,6 +83,12 @@
     msg: "Docker Compose V2 is required but not found. Please install Docker Compose V2."
   when: docker_compose_v2.rc is defined and docker_compose_v2.rc != 0
 
+- name: Install Docker-Compose
+  pip:
+    name: docker-compose
+    state: present
+    executable: pip3
+
 - name: Download AWX
   get_url:
     url: "{{ awx }}"
