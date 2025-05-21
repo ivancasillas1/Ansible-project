@@ -85,7 +85,7 @@
     login_password: Viewnext
     name: vagrant
     password: Viewnext
-    priv: 'worpress.*:ALL,GRANT'
+    priv: 'wordpress.*:ALL,GRANT'
     host: '%'
     state: present
 
