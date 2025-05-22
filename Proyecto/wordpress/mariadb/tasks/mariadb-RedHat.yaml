@@ -115,3 +115,8 @@
   systemd:
     name: firewalld
     state: reloaded
+
+- name: Reboot server
+  reboot:
+    reboot_timeout: 60
+    post_reboot_delay: 30
