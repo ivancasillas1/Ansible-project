@@ -77,9 +77,9 @@
     regexp: '^SELINUX=.*'
     replace: 'SELINUX=disabled'
 
-- name: Disable SELinux for current session
-  command: setenforce 0
-  when: ansible_selinux.status == "enabled"
+#- name: Disable SELinux for current session
+#  command: setenforce 0
+#  when: ansible_selinux.status == "enabled"
 
 # Restart Nginx Web Server
 - name: Restart HTTPD service
