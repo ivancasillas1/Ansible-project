@@ -82,7 +82,14 @@
 #  when: ansible_selinux.status == "enabled"
 
 # Restart Nginx Web Server
+
+- name: Reboot server
+  reboot:
+    reboot_timeout: 60
+    post_reboot_delay: 30
+    
 - name: Restart HTTPD service
   service:
     name: httpd
-    state: restarted
+    state: started
+    enabled: yes
