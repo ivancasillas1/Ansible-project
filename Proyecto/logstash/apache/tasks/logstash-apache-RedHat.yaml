@@ -66,14 +66,14 @@
 
 - name: Set permissions on Apache access log file
   file:
-    path: /var/log/httpd/access.log
+    path: /var/log/httpd/access_log
     owner: root
     group: wheel
     mode: '0644'
 
 - name: Set permissions on Apache error log file
   file:
-    path: /var/log/httpd/error.log
+    path: /var/log/httpd/error_log
     owner: root
     group: wheel
     mode: '0644'
