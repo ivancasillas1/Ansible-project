@@ -2,7 +2,7 @@
 # Iván Ternero Fernández
 # Main File for Playwright Installation
 - name: Install PlayWright
-  hosts: controladora
+  hosts: visualizador
   become: yes
   become_method: sudo
   roles:
