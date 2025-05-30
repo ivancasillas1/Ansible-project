@@ -1,7 +1,6 @@
 ---
-- name: Install Playwright
-  hosts: visualizador
+- name: Install PlayWright
+  hosts: controladora
   become: yes
-  become_method: sudo
   roles:
     - roles
