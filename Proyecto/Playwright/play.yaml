@@ -1,0 +1,9 @@
+---
+# Iván Ternero Fernández
+# Main File for Playwright Installation
+- name: Install PlayWright
+  hosts: controladora
+  become: yes
+  become_method: sudo
+  roles:
+    - playwright
