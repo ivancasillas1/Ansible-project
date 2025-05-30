@@ -77,10 +77,4 @@
     daemon_reload: yes
     enabled: yes
     state: started
-
-- name: Start apache_exporter service
-  service:
-    name: apache_exporter
-    state: started
-    enabled: yes
 ...
