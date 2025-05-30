@@ -64,7 +64,7 @@
 
       [Service]
       User={{ prometheus_user }}
-      ExecStart=/usr/local/bin/apache_exporter --scrape_uri=https://localhost/server-status?auto --web.listen-address=0.0.0.0:9117
+      ExecStart=/usr/local/bin/apache_exporter --scrape_uri=http://localhost/server-status?auto --web.listen-address=0.0.0.0:9117
       Restart=always
 
       [Install]
