@@ -72,7 +72,7 @@
     mode: "0644"
 
 - name: Reload systemd and start Apache Exporter
-  ansible.builtin.systemd:
+  service:
     name: apache_exporter
     daemon_reload: yes
     enabled: yes
