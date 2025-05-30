@@ -68,7 +68,7 @@
       Restart=always
 
       [Install]
-      WantedBy=multi-usre.target
+      WantedBy=multi-user.target
     mode: "0644"
 
 - name: Reload systemd and start Apache Exporter
