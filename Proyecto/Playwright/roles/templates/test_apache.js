@@ -7,7 +7,7 @@ const fs = require('fs');
 
   const start = Date.now();
   try {
-    await page.goto('http://172.26.203.191');
+    await page.goto('http://{{ apache_host }}');
     await page.waitForTimeout(1000);
     console.log('Acceso exitoso');
   } catch (error) {
@@ -15,6 +15,6 @@ const fs = require('fs');
   }
   const duration = Date.now() - start;
   console.log(`Tiempo de carga: ${duration} ms`);
-  fs.appendFileSync('metrics.log', `access_duration_ms ${duration}\n`);
+  fs.appendFileSync('/opt/playwright-test/metrics.log', `access_duration_ms ${duration}\n`);
   await browser.close();
 })();
