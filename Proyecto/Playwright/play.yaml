@@ -1,6 +1,0 @@
----
-- name: Install PlayWright
-  hosts: controladora
-  become: yes
-  roles:
-    - roles

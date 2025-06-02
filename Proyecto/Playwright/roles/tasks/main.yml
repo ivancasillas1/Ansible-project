@@ -1,5 +1,0 @@
----
-# tasks file for playwright
-- name: Install PlayWright
-  include_tasks: "playwright-{{ ansible_os_family }}.yaml"
-...
