@@ -1,5 +1,6 @@
 ---
-# tasks file for roles
+# Iván Ternero Fernández
+# tasks file for AWX roles
 - name: install AWX
   include_tasks: "awx-{{ ansible_os_family }}.yaml"
 ...
