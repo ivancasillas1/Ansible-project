@@ -1,6 +1,6 @@
 ---
 - name: Elasticsearch and kibana installation
-  hosts: visualizador
+  hosts: prueba
   become: yes
   become_method: sudo
   roles:
